@@ -8,6 +8,8 @@ In the codes section, we implement the Full LOLA in the context of adversarial t
 
 The codes are a collaboration between Metehan Cekic, who wrote most of the general structure of the module, and Raphael Chinchilla, who implemented the algorithm and did most of the testing and debugging.
 
+The adversarial attack is implemented in the file `train_test.py`
+
 Run the codes by typing: `python -m codes.mnist.main -tr -sm -at` and `python -m codes.cifar.main -tr -sm -at`.
 
 Besides pytorch and some other standard packages, the code also requires the deepillusion package, developped by Metehan Cekic and avaiable on pip.

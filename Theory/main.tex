@@ -1,0 +1,686 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template Definitions, do not touch
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage{lmodern}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[draft]{jphmacros2e}
+\let\div\relax
+\let\trace\relax
+\let\rank\relax
+\let\erf\relax
+\usepackage{physics}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{mathtools}
+\usepackage{abrege}
+\usepackage{draftcopy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some commands not defined on abrege and jphmacros
+
+\renewcommand{\eE}{\mathds{E}}
+\DeclareMathOperator{\dx}{d\!}
+\newcommand{\at}[2][]{#1|_{#2}}
+\newcommand{\st}{\text{ s.t. }}
+\renewcommand{\pdf}{\textit{pdf}}
+\newcommand{\inv}[1][1]{^{-#1}}
+\renewcommand{\iff}{\Leftrightarrow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages loaded for this particular document
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} 
+
+
+% Attempt to make hyperref and algorithmic work together better:
+\usepackage{algorithm} 
+\usepackage{algpseudocode}
+
+
+
+\usepackage{changepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands defined for this particular document
+\newcommand{\red}[1]{{\color{red}{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%opening
+
+\title{On the Asymptotic Convergence of Full LOLA}
+\author{Raphael Chinchilla}
+\date{January 2021}
+
+
+\begin{document}
+	
+	\maketitle
+
+
+\section{Introduction}
+Solving a minmax problem, also known as robust optimization, consists on finding the optimal strategies for two players that want to optimize opposite interests. Conceptually, this is a versatile paradigm that can be used to model a variety of situations, including games such chess, elections between two candidates, an airplane flying in the middle of a storm and neural network accurately classifying misleading information. Most modern algorithms to solve minmax problems have players choosing locally their strategy without taking into account what the other player will do. Our goal in this technical note is to develop an algorithm in which each player takes chooses their local strategy while taking into account what will be other player's action.
+
+The modern approach to minmax problems was established in the seminal technical note by von Neumann \cite{neumann1928theorie} in which he proved that if the problem is convex in the minimization and concave in the maximization, then the min and the max commute, meaning that the order of the players does not matter. This is known as the Minmax Theorem and has since been extended to other cases \cite{fan1953minimax,sion1958general}.  
+
+However, in many problems of interest, the min and max do not necessarily commute. Some of these include adversarial learning \cite{szegedy_intriguing_2014,goodfellow_explaining_2015,moosavi-dezfooli_deepfool:_2016,madry_towards_2019}, generative adversarial networks \cite{goodfellow_generative_2014}, robust model predictive control \cite{garulli_robust_1999,magni2007robustness,copp_simultaneous_2017}, robust estimation \cite{huber1992robust,staudte2011robust}, robust optimization for stochastic optimization \cite{calafiore2006scenario, bandi_tractable_2012,chinchilla2019optimization}, among many. 
+
+In some cases, it is possible to solve the non-commuting minmax problems using approaches such as robust counterpart or cutting-set methods \cite{ben-tal_robust_2002,mutapcic2009cutting,bertsimas_theory_2011,bertsimas2016reformulation}. In the other cases, generally when the problem is non-convex non-concave, one is usually restricted to finding local minmax points, as defined in \cite{jinWhatLocalOptimality2019}, which have first and second order necessary and sufficient conditions obtained from the gradient and Hessian. 
+
+An elegant method to look for points satisfying the first order necessary condition is the Learning with Opponent Learning Awareness (LOLA) introduced in \cite{foerster2018learning}. The idea of LOLA is that the minimizer chooses its direction based on the predicted direction the maximizer will take. The convergence of a modified version of LOLA was given by the same group of authors \cite{letcher2018stable}.
+
+In this technical note, we introduce the Full LOLA algorithm, of which the standard LOLA can be seen as a linearization of. In our opinion, the Full LOLA approach has several elegant properties  which motivated us to explore using it. While we did not found any numerical application that could benefit from this approach instead of using Gradient Descent Ascent or other (strictly) first order methods, we believe the intuitions developed in these proofs might end up being useful either for other proofs or in applications we were not aware of.
+
+
+\paragraph*{Statement of Contributions: }
+The main ingredient of our approach is what we call the full descent ascent directions, defined in  Section \ref{sc:pbstate}. In essence, in a full descent ascent direction, the minimizer does not decrease the cost function at the current point, but instead decreases the cost function calculated at the next value that the maximizer will take. This choice of directions reflects the asymmetry of minmax games, in which the minimizer has less freedom to chose their action than the maximizer has. Building from this definition, in Section \ref{sc:obtaining} we propose a method to obtain full descent ascent directions based on gradients. For the maximizer, this is equivalent to gradient ascent. For the minimizer, the descent direction is obtained from a modified version of the cost function, in which the value of the maximizer is offset by the gradient ascent step. The method we propose is actually slightly more general, and allow us to solve problems with convex constraints. It also allow us to use scaling matrices to compute the directions, such as the Hessian, obtaining Newton types algorithms. In Section \ref{sc:conv} we prove the asymptotic convergence of the method, for two types of step sizes, either fixed or adjusted using an Armijo rule. For convenience of the exposition, all the proof are in the Appendix.
+
+
+\paragraph{Notation:} The set of real numbers is denoted by $\eR$. Given a vector $v\in \eR^n$, its transpose is denoted by $v'$. Consider a differentiable function $f:\eR^n\times \eR^m \mapsto \eR^p$. The Jacobian (or gradient if $p=1$) at a point $(\bar x,\bar y)$ according to the $x$ variable is a matrix of size $n\times p$ and is denoted by $\grad_xf(\bar x,\bar y)$. The partial derivative according to the coordinate $x$ is a matrix of size $n\times p$ and is denoted by $\partial_xf(\bar x,\bar y)$. Given a differentiable function $g: \eR^n \mapsto \eR^m$, $\grad_{x}f(\bar x,g(\bar x))=\partial_{x}f(\bar x,g(\bar x))+\grad_{x}g(\bar x)\partial_{y}f(\bar x,g(\bar x))$. For a twice differentiable function, the cross derivative is given by $\grad_{xy}f(\bar x,\bar y)=\grad_{x}(\grad_{y}f(\bar x,\bar y))$.
+
+
+
+ 
+ 
+ 
+\section{Problem statement} \label{sc:pbstate}
+
+
+Consider two non-empty, closed and convex sets \footnote{We remind the reader that $\eR^n$ is closed and convex.} $\Xcal \subset \eR^n$ and $\Ycal \subset \eR^m$  and a function $f: \Xcal\times \Ycal \mapsto \eR$. The minmax optimization
+\begin{equation} \label{eq:probstatement}
+\min_{x\in\Xcal}\max_{y\in\Ycal} f(x,y)
+\end{equation}
+denotes the problem of finding a  point $(x^*,y^*)\in \Xcal\times\Ycal$ such that $\forall y\in \Ycal$ and $\forall x\in \Xcal$
+$$
+f(x^*,y)\le f(x^*,y^*)\le \max_{\tilde y \in \Ycal}f(x,\tilde y).
+$$	 
+If such point exists, it is called a global minmax of $f( \cdot)$. 
+\subsection{Local minmax}
+
+Except in some specific cases, such as when $f(\cdot)$ is convex in $x$ and concave in $y$, finding a global minmax is extremely challenging. An alternative is to look for a local minmax, which was first defined in \cite{jinWhatLocalOptimality2019}.
+\begin{definition}[Local minmax according to Jin et al.] \label{def:localminmax}
+	A point $(x^*,y^*)$ is said to be a local minmax of $f(\cdot)$ if there exist $\delta_0>0$ and a positive function $h(\cdot)$ satisfying $h(\delta)\to 0$ as $\delta\to0$, such that for any $\delta \in (0,\delta_0]$,  $\forall x \in \Xcal:  \norm{x-x^*}\le\delta$ and $\forall y  \in \Ycal:  \norm{y-y^*}\le h(\delta)$ we have that
+	\begin{align*}
+	f(x^*,y)\le f(x^*,y^*)\le \max_{\tilde y\in \Ycal:\norm{\tilde y-y^*}\le h(\delta)}f(x,\tilde y) \tag* \frqed
+	\end{align*}
+\end{definition}
+Essentially, a local minmax is defined by properties that hold on neighborhoods around $(x^*,y^*)$. Local properties have  the advantage that they tend to be easier to verify than global ones. Unfortunately, a global minmax might not be a local minmax, and we refer the reader to the original paper for a counter example and an analysis on this question.
+
+Despite this evident drawback in the definition of local minmax, one of its main advantages is that one can deduce first order necessary conditions of optimality. We state the result in a slightly more general form than it is stated in \cite{jinWhatLocalOptimality2019} in order to take into account constraints. 
+
+\begin{proposition}[First order necessary condition] \label{prop:1storder}
+	Assume $f(\cdot)$ is continuously differentiable and $(x^*,y^*)$ is a local minmax. Then, $\forall y\in \Ycal$, $(y-y^*)'\grad_y f(x^*,y^*)\leq0$. Moreover,  $\exists \delta_0>0$ such that $\forall x\in \Xcal : \norm{x-x^*}<\delta_0$, $(x-x^*)'\grad_x f(x^*,y^*)\geq0$. \frqed
+\end{proposition}
+
+
+
+\begin{corollary}[Unconstrained conditions]
+	Assume $f(\cdot)$ is continuously differentiable and $(x^*,y^*)$ is a local minmax and an interior point of $\Xcal\times\Ycal$. Then $\grad_y f(x^*,y^*)=0$ and $\grad_x f(x^*,y^*)=0$. \frqed
+\end{corollary}
+\begin{proof}
+	For the max, if $y^*$ is an interior point of $\Ycal$, then for any $y \in \Ycal$ there is a $\beta\in (0,1]$ such that $y^*-\beta(y-y^*)\in \Ycal$. Therefore we have that $(y-y^*)'\grad_y f(x^*,y^*)\leq0$ and that $-\beta(y-y^*)'\grad_y f(x^*,y^*)\leq0$ which implies that $\grad_y f(x^*,y^*)=0$. The proof for the min is equivalent. \frQED
+
+\end{proof}
+
+
+
+
+
+\subsection{Descent ascent algorithms} 
+
+Consider two arbitrary functions $d_x(x,y)$ and $d_y(x,y)$ that satisfy the conditions that  $x+d_x(x,y)\in\Xcal$ and $y+d_y(x,y)\in\Ycal$ and a sequence of scalars $\{(\alpha^k,\beta^k)\}$ with $\alpha^k,\beta^k \in (0,1]$. Given an initial point $(x^0,y^0)\in \Xcal\times \Ycal$, the sequence $\{(x^k,y^k)\}$ is recursively defined by
+\begin{equation} \label{eqdef:sequence}
+\begin{split}
+x^{k+1}&= x^k + \alpha^k d_x(x^k,y^k)\\
+y^{k+1}&= y^k + \beta^k d_y(x^{k+1},y^k).
+\end{split}
+\end{equation}
+
+In general, there are no closed form expressions to obtain local minmax points. Instead, one uses descent ascent algorithms, in which one designs numerical functions $d_x(x,y)$ and $d_y(x,y)$ and sequences $\{(\alpha^k,\beta^k)\}$ such that every limit point of the sequence $\{(x^k,y^k)\}$ satisfies the first order optimality conditions of Proposition \ref{prop:1storder}; \textbf{we call such points of stationary points}. The most common type of descent ascent algorithms uses alternating descent ascent sequences, for which we give the following definition:
+\begin{definition}[Alternating descent ascent]
+We say that the sequence defined by \eqref{eqdef:sequence} is an  alternating descent ascent sequence if it satisfies
+\begin{subequations}
+\begin{gather}
+f(x^{k+1},y^k)\leq f(x^k,y^k)\\
+f(x^{k+1},y^{k+1})\geq f(x^{k+1},y^k).
+\end{gather}
+\end{subequations}
+with at least one of the inequalities holding strictly.
+By extension, we say that  $\alpha d_x(x,y)$ and $\beta d_y(x,y)$ are alternating descent ascent directions. \frqed
+\end{definition}
+
+
+This formality includes many of the most popular algorithms minmax algorithms. Here are some examples:
+\begin{enumerate}
+	\item Gradient Descent Ascent: $d_x(x,y)=-\alpha \grad_x f(x,y)$ and $d_y(x,y)=\beta \grad_y f(x,y)$ with $\alpha \tand \beta \in (0,+\infty)$
+	\item Gradient Descent multiple Ascent: $d_x(x,y)=-\alpha\grad_x f(x,y)$ and $d(x,y)=\sum_{k=1}^n \grad_yf(x,\tilde y_k)$,  with $\alpha \tand \beta \in (0,+\infty)$ and where $\grad_yf(x,\tilde y_k)$ is implicitly defined by
+	\begin{align*}
+	\tilde y_1 &= y+ \beta \grad_yf(x,y)\\
+	\tilde y_2 &= \tilde  y_1+ \beta \grad_yf(x,\tilde y_1)\\
+	&\vdots
+	\end{align*}
+	\item GradaMax: $d_x(x,y)=-\alpha \grad_x f(x,y)$ with $\alpha\in (0,+\infty)$  and $d_y(x,y)\in \argmax_{d_y:y+d_y\in \Ycal} f(x,y+d_y)$, $\beta=1$.
+	\item Alternating minmax: $d_x(x,y)\in \argmin_{d_x:x+d_x\in\Xcal} f(x+d_x,y)$ and $d_y(x,y)\in \argmax_{d_y:y+d_y\in \Ycal} f(x,y+d_y)$.
+\end{enumerate}
+Other methods popular in the robust training community such as Fast Gradient Sign Method (FGSM) and Projected Gradient Descent (PGD) can also be expressed as alternating directions minmax. 
+
+A notable characteristic of alternating descent ascent sequences is that each player takes an action without taking into consideration what will be the consequences on the other player's action. Instead, we argue in this technical note for an approach where $d_x(x,y)$ and $d_y(x,y)$ are computed simultaneously, each player choosing their action while taking into account the other player's move. This is captured in the following definition.
+
+\begin{definition}[Full descent ascent] \label{def:sim}
+	We say that the sequence defined by \eqref{eqdef:sequence} is a full descent ascent sequence if it satisfies
+	\begin{subequations} \label{eqdef:simdescasc}
+	\begin{gather}
+	f(x^{k+1},y^{k+1})\leq f(x^k,y^k+\beta^k d_y(x^k,y^k))\\
+	f(x^{k+1},y^{k+1})\geq f(x^{k+1},y^k).
+	\end{gather}
+	\end{subequations}
+	with at least one of the inequalities holding strictly.
+	By extension, we say that $\alpha d_x(x,y)$ and $\beta d_y(x,y)$ are full descent ascent directions. \frqed
+\end{definition}
+
+Fundamentally, the full descent ascent captures the nature of minmax optimizations. Not only the descent ascent step choices are, by construction, asymmetric, but it also reflects the fact the minimization needs to chose their step considering what will be the action of the max.
+
+\begin{remark}[Solving minmax as a full descent ascent algorithm]
+If one uses the GradMax (as defined above), then the sequence \eqref{eqdef:sequence} could asymptotically converge towards a local minmax, most notable if $f(\cdot)$ is strongly convex in $x$ and strongly concave in $y$. Now, consider an analogous choice of full descent ascent directions given by:
+\begin{gather*}
+d_x(x^k,y^k)\in \argmin_{d_x : d_x+x^k\in \Xcal} f(x+d_x,y+d_y(x+d_x,y))\\
+d_y(x^{k+1},y^k)=\argmax_{d_y: y+d_y\in \Ycal} f(x^{k+1},y^k+d_y).
+\end{gather*}
+where we assume the $\argmax$ is uniquely achieved. This choice of directions is \textbf{exactly} the solution of the minmax optimization. Evidently, one does not have access to closed form expressions of such functions, as this is the goal itself of an optimization algorithm. However, this shows how the full descent ascent directions describe a more appropriate concept of direction to find mimnax points.
+\end{remark}
+
+\section{Obtaining local full descent ascent directions} \label{sc:obtaining}
+
+In order to obtain local $d_x(x,y)$ and $d_y(x,y)$, it is usefull to consider the following result from minimization. Suppose one wants to solve the problem $\min _{x\in \Xcal} f(x)$ where $\Xcal$ is a convex set. If $f(\cdot)$ is continuously differentiable, projected direction methods solve this optimization by generating a sequence $x^{k+1}=x^k+\alpha d_x(x^k)$ where $d_x(x)$ is a local descent direction obtained from solving the quadratic subproblem
+\begin{equation}\label{eq:squadmin}
+d_x(x) =\! \argmin_{d_x : d_x+x\in \Xcal} f(x) + d_x'\grad_x f(x) +\frac{1}{2} d_x'A(x)d_x
+\end{equation}
+where $A(x)$ is a strictly positive definite matrix and $\alpha\in(0,1]$. A large number of optimization methods can be written in this form including gradient descent (choosing $A(x)$ as the identity matrix), Newton method (choosing $A(x)$ as the Hessian matrix), Gauss-Newton method and its generalizations, Quasi-Newton methods, Trust Region methods (by also including a constraint on the norm of $d_x$) among many others.
+
+In an analogous way, if $f(x,y)$ is differentiable in $y$, we define $d_y(x,y)$ as the solution of
+\begin{equation}\label{eq:dirmax}
+d_y(x,y)=
+\!\argmax_{d_y: y+d_y\in \Ycal}\! f(x,y)+d_y'\grad_yf(x,y)-\frac{1}{2}d_y'B(x,y)d_y
+\end{equation}
+where $B(x,y)$ is a positive definite matrix. It is important to emphasize that $d_y(x,y)$ is function both of $x$ and $y$. Consider the function  $\hat f_x(x,y)$ defined by
+\begin{equation} \label{eq:funsim}
+\hat f_x(x,y):=f(x,y+\beta d_y(x,y)).
+\end{equation}
+If $\hat f_x(x,y)$ is differentiable in $x$, we define $d_x(x,y)$ by 
+\begin{equation}\label{eq:dirmin}
+d_x(x,y)= \!\!\!\argmin_{d_x: x+d_x\in \Xcal}\!\!\! \hat f_x(x,y)+d_x'\grad_x\hat f_x(x,y)+\frac{1}{2}d_x'A(x,y)d_x\!\!
+\end{equation}
+where $A(x,y)$ is a positive definite matrix. We can now state our first result
+\begin{proposition}[Computing local directions]
+	If $f(x,y)$ is continuously differentiable with respect to $y$ and $\hat f_x(x,y)$ is continuously differentiable with respect to $x$ on a neighborhood around a point $(\tilde x,\tilde y)$ which is not a  stationary point, then there exist $\alpha_0$ and $\beta_0$ such that $\forall \alpha\in(0,\alpha_0)$ and $\forall \beta\in (0,\beta_0)$  $\alpha d_x(\tilde x,\tilde y)$ and $\beta d_y(\tilde x,\tilde y)$ are full descent ascent directions. \frqed
+\end{proposition}
+
+
+We will now look at two particular choices of matrices $A(x,y)$ and $B(x,y)$ that will also help understanding the algorithm. In both we will consider the unconstrained case ($\Xcal=\eR^n$ and $\Ycal=\eR^m$).
+
+\subsection{Full LOLA}
+
+The first case is when one chooses $A(x,y)$ and $B(x,y)$ as the identity matrix, which is what we call the full LOLA. The direction for the max is 
+\begin{equation*}
+\beta d_y(x,y)=\beta \grad_yf(x,y).
+\end{equation*}
+For the min, the direction is 
+\begin{align*}
+d_x(x,y)=&-\grad_xf(x,y+\beta\grad_yf(x,y))\\
+ =&-\partial_xf(x,y+\beta\grad_yf(x,y)) \label{eq:simgda} -\beta\grad_{xy}f(x,y)\partial_yf(x,y+\beta\grad_yf(x,y)).
+\end{align*}
+If one linearizes this direction around $(x,y)$ one obtains
+\begin{equation*}
+d_x(x,y)=- \grad_xf(x,y) -\beta \grad_{xy}f(x,y) \grad_yf(x,y)
+\end{equation*}
+\ie the standard LOLA direction. 
+
+Using these results, the full descent ascent sequence is
+\begin{equation*}
+\begin{split}
+x^{k+1}&= x^k + \alpha^k -\grad_xf(x,y+\beta\grad_yf(x,y))\\
+y^{k+1}&= y^k + \beta^k \grad_y f(x^{k+1},y^k).
+\end{split}
+\end{equation*}
+In contrast with the standard (alternating) gradient descent ascent, in (full) LOLA, the descent direction uses the gradient of the maximzer to correct the direction towards where it should go. In the case where case where $(x^k,y^k)$ is a local maximum, both the full and standard LOLA are equivalent to a gradient descent ascent as $\grad_yf(x^k,y^k)=0$.
+
+\subsection{Full Newton types algorithms}
+
+Full descent ascent algorithms can also be used as Newton types algorithms by choosing matrices $A(x,y)$ and $B(x,y)$ as Hessian. For the maximizer, the straightforward choice of matrix is $B(x,y)=-\grad_{yy}f(x,y)$. For the minimizer there are two options. The first option is to take $A(x,y)=\grad_{xx}f(x,y)$ and the secondis to take
+\begin{equation*}
+A(x,y)=\grad_{xx}f\Big(x,y-\beta\grad_{yy}f(x,y)\inv\grad_yf(x,y)\Big)
+\end{equation*}
+Taking $A(x,y)=\grad_{xx}f(x,y)$ has the advantage of making the differentiation easier, while in the second option we more closely maintain the spirit of full descent ascent of minimizing the cost of the future direction. 
+
+
+\begin{remark}[Differentiability of $\hat f_x(x,y)$]
+The assumption of differentiability of $\hat f_x(x,y)$ with respect to $x$  is closely related to the differentiability of $d_y(x,y)$, which is known as sensitivity analysis. In the case where $(x,y)$ is an interior point of the constrain set (or, equivalently, if $\Ycal=\eR^m$) a sufficient condition is that $\grad_yf(x,y)$ and $B(x,y)$ are differentiable. However, establishing differentiability in the case where $(x,y)$ is not an interior point is substantially more challenging, and naming such conditions goes beyond the scope of this technical note. We refer the reader to \cite{shapiro_differentiability_2016} which has a thorough treatment of the topic. \frqed
+\end{remark}
+
+\begin{remark}[Using momentum]
+In minimization, algorithms with momentum are of the general form
+$x^{k+1}= x^k -\alpha(\grad_xf(x^k)+p_x^k)$. One example of such algorithm is to use $p_x^k=\grad_xf(x^{k-1})+\mu\,p_x^{k-1}$ with $\mu \in [0,1]$. 
+
+The framework of full descent ascent also allows for methods with momentum by substituting $\grad_yf_x(x,y)$ by $\grad_yf_x(x,y)+p_y$ in \eqref{eq:dirmax} and  $\grad_x\hat f_x(x,y)$ by $\grad_x\hat f_x(x,y)+p_x$ in \eqref{eq:dirmin}, although these might no longer be full descent ascent directions as we define in Definition  \ref{def:sim}. \frqed
+\end{remark}
+
+\section{Asymptotic convergence} \label{sc:conv}
+
+Our goal now is to obtain conditions such that every limit point of the sequence
+\begin{equation*}
+\begin{split}
+x^{k+1}&= x^k + \alpha^k d_x(x^k,y^k)\\
+y^{k+1}&= y^k + \beta^k d_y(x^{k+1},y^k)
+\end{split}
+\end{equation*}
+where $d_x(x^k,y^k)$  is given by \eqref{eq:dirmin} and $d_y(x^{k+1},y^k)$ is given by \eqref{eq:dirmax} is a stationary point. We will not make any assumption of convexity or concavity instead casting the results in the most general possible way. For this reason, our convergence results will pertain to asymptotic properties of full descent ascent sequences. Results on non asymptotic convergence will be the subject of a future work. 
+
+For the sake of conciseness, we will state our using the notation
+\begin{equation*}
+\hat f_x(x,y)=f(x,y+\beta d_y(x,y)).
+\end{equation*}
+
+
+Let us denote by $\lambda_{min}(M)$ and $\lambda_{max}(M)$ the smallest and largest eigenvalues of a symmetric matrix $M$. In addition to the assumptions of convexity and closeness of $\Xcal$ and $\Ycal$ and the continuous differentiability of $f(\cdot)$ and $\hat f_x(\cdot)$ we will also need the following assumptions. 
+\begin{assumption} \label{ass:converge} \ 
+		 Given a full descent ascent sequence $\{(x^k,y^k)\}$, for all $k$ the eigenvalues of $A(x^k,y^k)$ and $B(x^k,y^k)$ are bounded by bellow and above and away from zero, meaning that there exist positive constants $c_1,c_2,c_3,c_4$ such that $\forall k>0$, 
+%		\begin{align*}
+%		 c_1 \norm{\tilde x}^2&\leq \tilde x'A(x^k,y^k) \tilde x\leq c_2 \norm{\tilde x}^2  \\  c_3 \norm{\tilde y}^2&\leq \tilde y'B(x^k,y^k) \tilde y\leq c_4 \norm{\tilde y}^2 \tag* \frqed  
+%		\end{align*}		
+		\begin{align*}
+		\lambda_{min}(A(x^k,y^k))> c_1 && \lambda_{max}(A(x^k,y^k))< c_2\\
+		\lambda_{min}(B(x^k,y^k))> c_3 && \lambda_{max}(B(x^k,y^k))< c_4		\tag* \frqed  
+		\end{align*}
+\end{assumption}
+This assumption essentially guarantees that optimizations  \eqref{eq:dirmax} and \eqref{eq:dirmin} will always be well defined and only have one solution. It is important to emphasize that $A(x,y)$ and $B(x,y)$ are algorithmic choices in the sense that they are chosen by the practitioner.
+
+Our first result concerns the convergence when the matrices $A(x^k,x^k)$ and $B(x^k,x^k)$ and the step sizes $\alpha^k,\beta^k$ are constant.
+\begin{theorem}[Constant step size] \label{th:constant}
+	Let $\{(x^k,y^k)\}$ be a  full descent ascent sequence with $\alpha^k=\beta^k=1$, $A(x,y)=A$ and $B(x,y)=B$. Assume that $\forall x_1,x_2 \in \Xcal$ and $\forall y_1,y_2 \in \Ycal$ there exist constants $L_x,L_y>0$ such that the following smoothness condition holds:
+	\begin{equation*}
+	\norm{\grad_x f(x_1,y_1)-\grad_x  f(x_2,y_2)}<L_x \sqrt{\norm{x_1-x_2}^2 + \norm{y_1-y_2}^2}
+	\end{equation*}	
+	\begin{equation*}
+	\norm{\grad_y  f(x_1,y_1)-\grad_y f(x_2,y_2)}<L_y \sqrt{\norm{x_1-x_2}^2 + \norm{y_1-y_2}^2}
+	\end{equation*}
+	 If $2 \qty(L_x\sqrt{1+\lambda_{min}(B)\,L_y^2})\inv > \lambda_{min}(A)\inv$ and $2\,L_y\inv>\lambda_{min}(B)\inv$ then every limit point of $\{(x^k,y^k)\}$ is a stationary point of $f(\cdot)$. Moreover, $d_x(x,y)$ and $d_y(x,y)$ are full descent ascent directions, meaning that 
+	\begin{gather*}
+	f(x^{k+1},y^{k+1})\leq  f(x^{k},y^{k}+d_y(x^k,y^k)) \\
+	f(x^{k+1},y^{k+1}) \geq f(x^{k+1},y^{k}) 
+	\end{gather*}	
+	with at least one of the inequalities holding strictly. \frqed
+\end{theorem}
+
+
+It is easier to interpret Theorem \ref{th:constant} when $\Xcal=\eR^n$, $\Ycal=\eR^m$
+The full descent ascent directions are
+\begin{align*}
+d_y(x,y)=& B\inv \grad_yf(x,y)\\ 
+d_x(x,y)=&-A\inv \grad_xf(x,y+B\inv \grad_yf(x,y)).
+\end{align*}
+Now if we use the fact that $\lambda_{max}(A\inv)=\lambda_{min}(A)\inv$ and equivalent to $B$, Theorem \ref{th:constant} essentially says two things. The first one is that the larger the constants $L_x,L_y$ are, the smaller the step sizes, represented by $\lambda_{min}(A)\inv$ and $\lambda_{min}(B)\inv$, can be. This kind of result is typical in optimization. But the second particularly interesting thing is that the maximum step size of the minimizer depends on the step size of maximizer, essentially stating that if the maximizer take small steps, the minimizer also needs to take small steps. The idea that the minimizer needs to take smaller steps than the maximizer is common in minmax optimization (see for instance the discussion for Gradient Descent Ascent on \cite{jinWhatLocalOptimality2019}). What is innovative in our result is that we are able to quantify exactly how big the step can be.
+
+The biggest limitation of Theorem \ref{th:constant} is that one often does not know the values of $L_x$ and $L_y$. As a consequence, one would need to manually tune the matrices $A$ and $B$ using a on trial and error, and the step sizes are rarely as large as they could be. Our next result uses an Armijo type condition and a backtracking algorithm to determine the step sizes. We point out that the result does not require the smoothness condition.
+
+
+
+Take two scalars $\sigma_x,\sigma_y\in(0,1)$. At a given point $(x^k,y^k)$, given two step sizes $(\alpha^k,\beta^k)$, we define the following Armijo type conditions for the minmax
+\begin{subequations}
+\begin{equation}
+ f(x^{k+1},y^{k+1})-\hat f_x(x^k,y^k)\leq \sigma_x\,\alpha^k\,d_x(x^k,y^k)'\grad_{x}\hat f_x(x^k,y^k) \label{eq:armiminnolin}
+\end{equation}
+\begin{equation}
+ f(x^{k+1},y^{k+1})-f(x^{k+1},y^k)\geq \sigma_y \, \beta^k \, d_y(x^{k+1},y^k)' \grad_yf(x^k,y^k)\label{eq:armimaxnolin} 
+\end{equation}
+\end{subequations}
+ with at least one of the inequalities holding strictly and where $\hat f_x(x,y)$ is given by \eqref{eq:funsim}. We bring attention to the reader that $d_x(x,y)$ and $\hat f(x,y)$ depend on the value of $\beta^k$. These Armijo conditions not only guarantee that $\alpha^kd_x(x^k,y^k)$ and $\beta^kd_y(x^{k+1},y^k)$ are full descent ascent directions, but also guarantees that at each iteration the steps are sufficiently large. We use these conditions to design Algorithm \ref{alg:bisect} and prove its convergence.
+\begin{algorithm}[t]
+	\begin{algorithmic}[1]
+		\Require  An initial point $(x^0,y^0)$ and  rates $r_x,r_y$ $\in (0,1)$
+		\State $(\alpha^k,\beta^k)=(1,1)$
+		\While {$f(\tilde x,\tilde y)-F_{min}>0$ and $f(\tilde x,\tilde y)-F_{max}<0$ }
+		\State $\tilde x= x^k + \alpha^k d_x(x^k,y^k)$
+		\State $\tilde y= y^k + \beta^k d_y(\tilde x,y^k)$
+		\State $F_{min}=\hat f_x(x^k,y^k) + \sigma_x\alpha^kd_x(x^k,y^k)'\grad_x\hat f(x^k,y^k)$
+		\State $F_{max}=f(\tilde x,y^k) + \sigma_y \, \beta^k \, d_y(\tilde x,y^k)' \grad_yf(\tilde x,y^k)$ 		
+		\If {$f(\tilde x,\tilde y)-F_{min}>0$}
+		\State	$\alpha^k=\alpha^k\,r_x$ 
+		\EndIf				
+		\If {$f(\tilde x,\tilde y)-F_{max}<0$}
+		\State $\beta^k=\beta^k\,r_y$
+		\EndIf		
+		\EndWhile		
+		\State $x^{k+1}= \tilde x$
+		\State $y^{k+1}= \tilde y$
+		\State $k=k+1$
+		\State \textbf{Go to} 1
+	\end{algorithmic}
+	\caption{Simultaneous descent ascent with Armijo rule}
+	\label{alg:bisect}
+\end{algorithm}
+
+
+
+
+\begin{theorem}[Convergence of Armijo] \label{th:armijo}
+	Every limit point of a sequence $\{(x^k,y^k)\}$ generated by Algorithm \ref{alg:bisect} is a stationary point.   \frqed
+\end{theorem} 
+The idea behind Algorithm \ref{alg:bisect} is to obtain steps sizes $\alpha^k,\beta^k$ that satisfy the Armijo conditions by implementing a backtracking algorithm. A fundamental aspect of the algorithm is that $\alpha^k$ and $\beta^k$ are updated only when they do not satisfy their respective Armijo conditions; this plays a crucial role in the proof of Theorem \ref{th:armijo}.
+
+Theorem \ref{th:constant} and Theorem \ref{th:armijo} guarantee that every limit point of the generated full descent ascent sequence is a stationary point, but they do not guarantee that such limit points exist. This is guaranteed by the next result, the Capture Theorem. The Capture Theorem essentially says that, if $(x^*y^*)$ is an isolated local minmax, if one element $(x^{\bar k},y^{\bar k})$ of the full descent ascent passes close enough to it, then $\{(x^k,y^k)\}$ will converge towards $(x^*,y^*)$.
+
+
+\begin{theorem}[Capture Theorem]
+	Let $\{(x^k,y^k)\}$ be a sequence generated by the full descent ascent direction method using either the Theorem \ref{th:constant} or Theorem \ref{th:armijo}. Let $(x^*,y^*)$ be an isolated local minmax on a neighborhood where it is also the only stationary point. Then there exist a neighborhood $S_x\subset \Xcal$ around $x^*$ and a neighborhood $S_y\subset \Ycal$ around $y^*$  such that if for some $\bar k$, $(x^{\bar k},y^{\bar k})\in S_x\times S_y$ then  $\lim_{k,k>\bar k} (x^k,y^k)=(x^*,y^*)$. \qed 
+\end{theorem}
+
+
+\section{Conclusion}
+
+In this technical note, we have presented a new type of algorithm to solve minmax optimization using what we call full descent ascent directions. We have shown that such directions are better at generalizing the concept of descent direction from regular optimization. We were also able to state conditions that guarantee the asymptotic convergence of such algorithm to local minmax points.
+
+While we have not found applications for which full descent ascent directions outperform the state of the art, they provide an elegant way to look at minmax optimization. Further exploration, both with respect to the theory and practice, could unfold cases in which such directions outperform other methods. 
+
+
+
+
+
+\bibliographystyle{ieeetr}
+\bibliography{biblio}
+
+
+\newpage
+\onecolumn
+\appendix
+\section*{Appendix - Proofs of Theorems}
+
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{proposition}{0}
+
+\begin{proposition}[First order necessary condition]
+	Assume $f(\cdot)$ is continuously differentiable and $(x^*,y^*)$ is a local minmax. Then, $\forall y\in \Ycal$, $(y-y^*)'\grad_y f(x^*,y^*)\leq0$. Moreover,  $\exists \delta_0>0$ such that $\forall x\in \Xcal : \norm{x-x^*}<\delta_0$, $(x-x^*)'\grad_x f(x^*,y^*)\geq0$. \frqed
+\end{proposition}
+\begin{proof}
+	 Starting with the max, fix any $y\in \Ycal$ and let us denote $p_y:=(y-y^*)$. Because $\Ycal$ is convex, for any $\beta\in [0,1]$, $y^*+\beta p_y\in \Ycal$. As $(x^*,y^*)$ is a local maximum, there exist $\tilde \beta : \forall \beta \in [0,\tilde \beta]$ the following inequality holds
+	\begin{equation*}
+	0 \geq	\frac{f(x^*,y^*+\beta p_y)-f(x^*,y^*)}{\beta}
+	\end{equation*}
+	Because $f(\cdot)$ is continuously differentiable, according to the mean value Theorem, there exist $\bar \beta \in [0,\beta]$ such that the previous inequality is equivalent to
+	\begin{equation*}
+	0 \geq	\partial_yf(x^*,y^*+\bar \beta p_y)'p_y.
+	\end{equation*}	
+	Taking the limit as $\beta$ goes to $0$ finishes the first part of the proof. Now for the min, take the $\delta_0$ from the definition of local minmax, fix any $x\in \Xcal: \norm{x-x^*}<\delta_0 $ and let us denote $p_x:=(x-x^*)$. Because $\Xcal$ is convex, for any $\alpha\in [0,1]$, $x^*+\alpha p_x\in \Xcal$ and $\norm{p_x}<\delta_0$. Take the function $h(\cdot)$ from the definition of local minmax, and define the local optimum 
+	$$p_y^*(\alpha p_x) = \argmax_{p_y:y^*+p_y\in \Ycal, \norm{p_y}<h(\alpha p_x)}.$$
+	By the definition of $h(\cdot)$ we have that $p_y^*(\alpha p_x)\to 0$ as $\alpha \to 0$. Then, as $(x^*,y^*)$ is a local minmax,
+	\begin{align*}
+	0&\leq \frac{f(x^*+\alpha p_x,y^*+ p_y^*(\alpha p_x))-f(x^*,y^*)}{\alpha}\\
+	& = \frac{f(x^*+\alpha p_x,y^*+ p_y^*(\alpha p_x))-f(x^*,y^*)+f(x^*+,y^*+ p_y^*(\alpha p_x))-f(x^*+,y^*+ p_y^*(\alpha p_x))}{\alpha}\\
+	&\leq \frac{f(x^*+\alpha p_x,y^*+ p_y^*(\alpha p_x))-f(x^*,y^*+p_y^*(\alpha p_x))}{\alpha} \\
+	& = \partial_x f(x^*+\bar \alpha p_x,y^*+ p_y^*(\alpha p_x))'p_x  \quad \text{for some $\bar \alpha \in [0,\alpha] $}
+	\end{align*}
+	taking the limit as $\alpha$ goes to zero finishes the proof. \frQED
+\end{proof}
+
+\begin{proposition}[Computing local directions]
+	If $f(x,y)$ is continuously differentiable with respect to $y$ and $\hat f_x(x,y)$ is continuously differentiable with respect to $x$ on a neighborhood around a point $(\tilde x,\tilde y)$ which is not a stationary point, then there exist $\alpha_0$ and $\beta_0$ such that $\forall \alpha\in(0,\alpha_0)$ and $\forall \beta\in (0,\beta_0)$ the functions $d_x(\tilde x,\tilde y)$ and $d_y(\tilde x,\tilde y)$ are full descent ascent directions. \frqed
+\end{proposition}
+\begin{proof}
+	Consider the equations
+	\begin{align*}
+	f(x^{k+1},y^{k+1})&=\hat f(x^k,y^k) + \alpha d_x(x^k,y^k)'\grad_x \hat f(x^k,y^k) + o(\alpha) \\
+	f(x^{k+1},y^{k+1})&= f(x^{k+1},y^k) + \beta d_y(x^{k+1},y^k)'\grad_y  f(x^{k+1},y^k) + o(\beta)
+	\end{align*}
+	where we use the fact that $f(x^{k+1},y^{k+1})=\hat f(x^{k+1},y^k)$. As the functions are continuously differentiable,	there exist $\alpha_0$ and $\beta_0$ such that  $\forall \alpha\in(0,\alpha_0)$ and $\forall \beta\in (0,\beta_0)$ the terms $o(\alpha)$ and $o(\beta)$ are dominated. From \eqref{eq:dirmax} and \eqref{eq:dirmin}, we have that $d_y(x^k,y^k)'\grad_y f(x^k,y^k)\geq 0$ and $d_x(x^k,y^k)'\grad_x \hat f(x^k,y^k)\leq 0$. As at least either $d_y(x^k,y^k)'\grad_y f(x^k,y^k)$ or $d_x(x^k,y^k)'\grad_x \hat f(x^k,y^k)$ is non zero, otherwise $(x^k,y^k)$ would be a stationary point, then they are full descent ascent directions. \frQED
+\end{proof}
+
+\begin{lemma}[Simultaneous descent ascent are gradient related] \label{lm:grad_relat}
+	The full descent ascent directions $d_x(x,y)$ and $d_y(x,y)$ are gradient related meaning that for any sequence $\{(x^k,y^k)\}$ that converges to a nonstationary point, then the corresponding sequence  $\{(d_x(x^k,y^k),d_y(x^k,y^k))\}$ is bounded and satisfies
+	\begin{gather*}
+	\limsup_{k\to\infty} d_x(x^k,y^k)\,' \grad_x \hat f_x(x^k,y^k)\leq  0 \\
+	\liminf_{k\to\infty} d_y(x^{k+1},y^k)\,' \grad_y f(x^{k+1},y^k)\geq 0 
+	     \tag*\frqed
+	\end{gather*}
+	with at least one inequality holding strictly and where $\hat f_x(x,y)$ is defined in \eqref{eq:funsim}.
+\end{lemma}
+\begin{proof} The proof is inspired in the proof of Prop 3.3.1 of \cite{bertsekas_nonlinear}.
+	
+	
+	Assume that $\{(x^k,y^k)\}$ converges to a non stationary point $(\tilde x,\tilde y)$. We need to prove the following four equations
+	\begin{subequations}
+		\begin{gather}
+		\limsup_{k\to\infty} \norm{d_x(x^k,y^k)} < \infty \label{eqproof:boundedmin} \\ 		
+		\limsup_{k\to\infty} \norm{d_y(x^k,y^k)} < \infty \label{eqproof:boundedmax} \\
+		\liminf_{k\to\infty} d_y(x^{k+1},y^k)\,' \grad_y f(x^{k+1},y^k)\geq 0 \label{eqproof:gradrelatedmax} \\
+		\limsup_{k\to\infty} d_x(x^k,y^k)\,' \grad_x \hat f_x(x^k,y^k)\leq 0	\label{eqproof:gradrelatedmin}
+		\end{gather}
+	\end{subequations}
+	By continuity of the projection (see Prop. 1.1.4 in \cite{bertsekas_nonlinear}) and the differential continuity of $\grad_x \hat f_x(x,y)$ and $\grad_y f(x,y)$
+	\begin{subequations}
+		\begin{gather*}
+		\lim_{k\to\infty} \norm{d_y(x^k,y^k)} = \norm{d_y(\tilde x, \tilde y)} <\infty \\
+		\lim_{k\to\infty} \norm{d_x(x^k,y^k)} = \norm{d_x(\tilde x, \tilde y)} < \infty
+		\end{gather*}
+	\end{subequations}
+	which proves \eqref{eqproof:boundedmax} and \eqref{eqproof:boundedmin}. To prove \eqref{eqproof:gradrelatedmax} and  \eqref{eqproof:gradrelatedmin}, first remember the property that, for any continuously differentiable function $\phi(x)$ on a convex set $\Xcal$, if $x^*$ is a local minimum, then $\grad \phi(x^*)'(x-x^*)\geq 0 \ \forall x\in \Xcal$; there is an equivalent property for a local maximum. Applying these condition  to \eqref{eq:dirmax} and \eqref{eq:dirmin} we obtain
+	\begin{gather*}
+	\qty(B(x^{k+1},y^k)d_y(x^{k+1},y^k) - \grad_{y}f(x^{k+1},y^k))'(\tilde d_y-d_y(x^{k+1},y^k))\geq 0 \quad \forall \tilde d_y: d_y+y^k \in \Ycal  \\
+	\qty(A(x^k,y^k)d_x(x^k,y^k) +\grad_{x}\hat f_x(x^k,y^k))'(\tilde d_x-d_x(x^k,y^k))\geq 0 \quad \forall \tilde d_x: d_x+x^k \in \Xcal 
+	\end{gather*}
+	The above equations hold for $(\tilde d_x,\tilde d_y)=(0,0)$ which yields
+	\begin{subequations} \label{eqproof:boundedgrad}
+		\begin{gather}
+		\grad_{x}\hat f_x(x^k,y^k)'d_x(x^k,y^k)\leq - d_x(x^k,y^k)A(x^k,y^k)d_x(x^k,y^k) \leq -c_1\norm{d_x(x^k,y^k)}^2\\		
+		\grad_{y}f(x^{k+1},y^k)'d_y(x^{k+1},y^k)\geq  d_y(x^{k+1},y^k)'B(x^{k+1},y^k)d_y(x^{k+1},y^k) \geq c_3 \norm{d_y(x^{k+1},y^k)}^2  \label{eqproof:boundedgradmax}
+		\end{gather}
+	\end{subequations}
+	where the last inequality is taken from the boundness of the eigenvalues of $A(x^k,y^k)$ and $B(x^{k+1},y^k)$. Taking the limit we obtain
+	\begin{gather*}
+	\liminf_{k\to\infty} d_y(x^{k+1},y^k)\,' \grad_y f(x^{k+1},y^k)\geq c_3 \norm{d_y(\tilde x, \tilde y)}^2 \geq 0  \\
+	\limsup_{k\to\infty} d_x(x^k,y^k)\,' \grad_x \hat f_x(x^k,y^k)\leq -c_1 \norm{d_x(\tilde x, \tilde y)}^2 \leq 0
+	\end{gather*}
+	with at least one inequality holding strictly because $(\tilde x, \tilde y)$ is not a stationary point. \frQED	
+\end{proof}
+
+\begin{theorem}[Constant step size]
+	Let $\{(x^k,y^k)\}$ be a  full descent ascent sequence with $\alpha^k=\beta^k=1$, $A(x,y)=A$ and $B(x,y)=B$. Assume that $\forall x_1,x_2 \in \Xcal$ and $\forall y_1,y_2 \in \Ycal$ the exist constants $L_x,L_y>0$ such that the following smoothness condition holds:
+	\begin{equation*}
+	\norm{\grad_x f(x_1,y_1)-\grad_x  f(x_2,y_2)}<L_x \sqrt{\norm{x_1-x_2}^2 + \norm{y_1-y_2}^2}
+	\end{equation*}	
+	\begin{equation*}
+	\norm{\grad_y  f(x_1,y_1)-\grad_y f(x_2,y_2)}<L_y \sqrt{\norm{x_1-x_2}^2 + \norm{y_1-y_2}^2}
+	\end{equation*}
+	If $2 \qty(L_x\sqrt{1+\lambda_{min}(B)\,L_y^2})\inv > \lambda_{min}(A)\inv$ and $2\,L_y\inv>\lambda_{min}(B)\inv$ then every limit point of $\{(x^k,y^k)\}$ is a stationary point of $f(\cdot)$. Moreover, $d_x(x,y)$ and $d_y(x,y)$ are full descent ascent directions, meaning that
+	\begin{gather*}
+	f(x^{k+1},y^{k+1})\leq  f(x^{k},y^{k}+d_y(x^k,y^k)) \\
+	f(x^{k+1},y^{k+1}) \geq f(x^{k+1},y^{k}) 
+	\end{gather*}	
+	with at least one of the inequalities holding strictly. \frqed
+\end{theorem}
+\begin{proof} Let us start proving the property for the max. Using the property known as the ascent lemma for Lipschitz function (see Prop. A.24 in \cite{bertsekas_nonlinear}) we have that 
+	\begin{gather*}
+	f(x^{k+1},y^{k}+d_y(x^k,y^k))-f(x^{k+1},y^{k})\geq\grad_y f(x^{k+1},y^k ) 'd_y(x^k,y^k) - \frac{L_y}{2}\norm{d_y(x^{k+1},y^k)}
+	\end{gather*}
+	Combining this result with \eqref{eqproof:boundedgradmax} where  $c_3:=\lambda_{min}(B)$  we obtain
+	\begin{gather*}
+	f(x^{k+1},y^{k+1})-f(x^{k+1},y^{k})\geq \qty (\lambda_{min}(B) - \frac{L_y}{2})\norm{d_y(x^{k+1},y^k)}\geq 0
+	\end{gather*}
+	where the right most inequalities hold because $\lambda_{min}(B)>L_y/2$.	So if $(\bar x, \bar y)$ is a limit point of a subsequences $\{(x^k,y^k)\}_{\scr{K}}$ then
+	\begin{gather*}
+	\lim_{k\to \infty, k\in \scr{K}} f(x^{k+1},y^{k+1})-f(x^{k+1},y^{k})=0 	\end{gather*}
+	implying, by continuity of the projection, that  $\norm {d_y(\bar x, \bar y)}=0$.
+	
+	\medskip
+	
+	For the min, take $\hat f_x(x,y)$ as defined in \eqref{eq:funsim} and  consider the following inequalities
+	\begin{align*}
+	\norm{\grad_x \hat f_x(x+d_x(x,y),y)-\grad_x \hat f_x(x,y)}&=\norm{\grad_x  f\bigg(x+d_x(x,y),y+d_y\Big(x+d_x(x,y),y\Big)\bigg)-\grad_x f(x,y+d_y(x,y))}
+	\\&\leq L_x\sqrt{\norm{d_x(x,y)}^2+\norm{d_y\Big(x+d_x(x,y),y\Big)-d_y(x,y)}^2}
+	\\&\leq L_x\sqrt{\norm{d_x(x,y)}^2+\norm{B\inv \grad_yf\Big(x+d_x(x,y),y\Big)-B\inv\grad_yf(x,y)}^2}
+	\\&\leq L_x\sqrt{\norm{d_x(x,y)}^2+\lambda_{min}(B)\norm{ \grad_yf\Big(x+d_x(x,y),y\Big)-\grad_yf(x,y)}^2}	
+	\\&\leq L_x\sqrt{\norm{d_x(x,y)}^2+\lambda_{min}(B)\,L_y^2\norm{d_x(x,y)}^2}		
+	\\& = L_x\sqrt{1+\lambda_{min}(B)\,L_y^2}\norm{d_x(x,y)}
+	\end{align*}
+	where in the third line we used the fact that projections are nonexpansive (see Prop. 1.1.4 in \cite{bertsekas_nonlinear}). These imply that the function $\hat f_x(x,y)$ is also smooth with constant $L_x\sqrt{1+\lambda_{min}(B)\,L_y^2}$. So using the equivalent steps as for the max we arrive to
+	\begin{gather*}
+	\hat f_x(x^{k}+d_x(x^k,y^k),y^k)-\hat f_x(x^{k},y^{k})\leq \qty ( \frac{L_x\sqrt{1+\lambda_{min}(B)\,L_y^2}}{2}-\lambda_{min}(A))\norm{d_x(x^{k},y^k)}\leq 0
+	\end{gather*}	
+	where the right most equality hold because $\lambda_{min}(A)>L_x\sqrt{1+\lambda_{min}(B)\,L_y^2}\ /2$. 	So if $(\bar x, \bar y)$ is a limit point of a subsequences $\{(x^k,y^k)\}_{\scr{K}}$ then
+	\begin{gather*}
+	\lim_{k\to \infty, k\in \scr{K}} \hat f_x(x^{k+1},y^{k})-\hat f_x(x^{k},y^{k})=0 	\end{gather*}
+	implying, by continuity of the projection, that  $\norm {d_x(\bar x, \bar y)}=0$.  Therefore that $(\bar x, \bar y)$ is a stationary point.
+	 \frQED
+\end{proof}
+
+
+\begin{theorem}[Convergence of Armijo]
+	Every limit point of a sequence $\{(x^k,y^k)\}$ generated by Algorithm \ref{alg:bisect} is a stationary point.   \frqed
+\end{theorem}
+
+
+
+
+\begin{proof}
+	This proof is inspired by the proof of Prop. 1.2.1 in \cite{bertsekas_nonlinear}.
+	Take $\hat f_x(x,y)$ as defined in \eqref{eq:funsim} and, in order to have shorter expressions, let us define $d_x^k:=d_x(x^k,y^k)$ and $d_y^k:=d_y(x^{k+1},y^k)$.
+	
+	As $f(\cdot)$ and $\hat f_x(\cdot)$ are continuous function, then as $(\bar x, \bar y)$ is a limit point of $\{(x^k,y^k)\}$ then $f(\bar x, \bar y)$ is a limit point of $\{f(x^k,y^k)\}$ and equivalent to $\hat f_x(\cdot)$. Moreover, $f(\bar x, \bar y)$ is also a limit point of $\{f(x^{k+1},y^k)\}$. 
+	
+	Starting with the max. From the previous argument, we have that
+	$$
+	f(x^{k+1},y^k)-f(x^{k+1},y^{k+1})\to 0.
+	$$
+	By the choice of direction in \eqref{eq:dirmin} we have that $d_y^{k}\,' \grad_y f(x^{k+1},y^k)\geq 0$. Combining this with the Armijo rule in \eqref{eq:armimaxnolin} we have that 
+	\begin{equation}
+	f(x^{k+1},y^k)-f(x^{k+1},y^{k+1})\leq - \sigma_y \beta^k d_y^{k}\,' \grad_y f(x^{k+1},y^k)\leq 0
+	\end{equation}
+	
+	Therefore we obtain that
+	\begin{equation}\label{eqproof:maxtozero}
+	\lim_{k\to \infty} \beta^k d_y^{k}\,' \grad_y f(x^{k+1},y^k) =0
+	\end{equation}
+	
+	\medskip
+	
+	Now the min. Combining \eqref{eqproof:boundedgradmax} and \eqref{eqproof:maxtozero} implies that $\beta^k\,d_y^{k}\to\mathbf{0}_n$. And as $\hat f_x(\cdot)$ is continuous, we obtain %$\{(x^k,y^k+\beta^kd_y^k)\}\to(\bar x, \bar y)$ and therefore that
+	$$
+	\hat f_{x}(x^k,y^k)-f(x^{k+1},y^{k+1})\to 0.
+	$$
+	
+	By the choice of descent direction we have that $d_x^{k}\,' \grad_x \hat f_{x}(x^k,y^k) \leq0$, and by the Armijo rule
+	\begin{equation*}
+	\hat f_{x}(x^k,y^k)-f(x^{k+1},y^{k+1})\geq -\sigma_x\,\alpha^k d_x^{k}\,' \grad_x \hat f_{x}(x^k,y^k) \geq 0
+	\end{equation*}
+	Therefore we obtain
+	\begin{equation}\label{eqproof:mintozero}
+	\lim_{k\to\infty} \alpha^k d_x^{k}\,'\grad_x \hat f_x(x^k,y^k)=0
+	\end{equation}
+	
+	As $d_x^k$ and $d_y^k$ are gradient related from Lemma \ref{lm:grad_relat}, in order for \eqref{eqproof:maxtozero} and \eqref{eqproof:mintozero} to hold simultaneously either $(\bar x,\bar y)$ is a stationary point or $\alpha^k\to0$ or $\beta^k\to0$. 
+	\\
+	
+	We will assume, in order to arrive to a contradiction, that $(\bar x,\bar y)$ is not a stationary. We will start by assuming that $\{\beta^k\}\to0$, and show that it implies that $\{\alpha^k\}\to0$ and then show it leads to a contradiction.
+	\\
+	
+	The core argument used to prove the contradiction relies in the following observation. If  $\{\beta^k\}\to0$ it means that there exist a $\bar k$, such that for each $k>\bar k$ 
+	\begin{equation}
+	f\qty(x^k+\alpha^k d_x^k,y^k)-f\qty(x^k+\alpha^k d_x^k,y^k+\frac{\beta}{r_y}^k d_y^k )> - \frac{\beta}{r_y}^k\sigma_y  d_y^{k}\,' \grad_y f\qty(x^k+\alpha^k d_x^k,y^k). \label{eqproof:betamax}
+	\end{equation}	
+	This equation holds because $\{\beta^k\}\to0$ implies that the alternating backtracking algorithm will always need to run at least one time after some point, which we called $\bar k$. If the alternating backtracking algorithm ran at least one time it means that the Armijo conditions for the max was not verified for $\beta^k/r_y$, otherwise there would not have been the need to run another iteration of the backtracking, which justifies \eqref{eqproof:betamax}. 
+	\\
+	
+	Since the search direction $d_y^k$ is gradient related, then $\{d_y^k\}$ is bounded and so there exists a subsequences $\{d_y^k\}_{\scr{\bar K}}$ of $\{d_y^k\}$ such that $\{d_y^k\}_{\scr{\bar K}}$ converges to some point $\bar d_y$. Then, $\forall k\in \scr{\bar K}, k>\bar k $ 
+	\begin{equation}
+	\frac{f(x^k+\alpha^k d_x^k,y^k)-f(x^k+\alpha^k d_x^k,y^k+\beta^k/r_y d_y^k )}{\beta^k/r_y}> - \sigma_y  d_y^{k}\,' \grad_y f(x^k+\alpha^k d_x^k,y^k)
+	\end{equation}
+	By the mean value theorem, this relation can be written as
+	\begin{equation}
+	-d_y^k\,'\grad_yf(x^k+\alpha^k d_x^k,y^k+\tilde \beta^k d_y^k )> - \sigma_y  d_y^{k}\,' \grad_y f(x^k+\alpha^k d_x^k,y^k)
+	\end{equation}
+	with $\tilde \beta^k \in [0,\beta^k/r_y]$. Now taking the limit as $k\to\infty,k\in\scr{\bar K}$ and because $\{\beta^k\}\to0$ we obtain
+	$$
+	-\bar d_y\,' \grad_y f(\bar x, \bar y) \geq -\sigma_y \bar d_y\,' \grad_y f(\bar x, \bar y) \iff 0 \geq (1-\sigma_y) \bar d_y\,' \grad_y f(\bar x, \bar y) \Rightarrow 0 \geq \bar d_y\,' \grad_y f(\bar x, \bar y).
+	$$
+	There are two possible cases. The first one is that the last inequality holds strictly, \ie $\bar d_y\,' \grad_y f(\bar x, \bar y)<0$. This contradicts the assumption that $\bar d_y$ is gradient related, therefore this case is not possible. The second case is that $\bar d_y\,' \grad_y f(\bar x, \bar y)=0$. By contradiction assumption, $(\bar x, \bar y)$ is not a stationary point, meaning  $\lim_{k\to\infty} \alpha^k d_x^{k}\,'\grad_x \hat f_x((x^k,y^k)\neq0$ (otherwise $(\bar x, \bar y)$ is a stationary point). By  \eqref{eqproof:mintozero} this implies that $\{\alpha^k\}\to0$.
+	\\
+	\medskip
+	Analogously to the previous case, if $\{\alpha^k\}\to0$ then there exist a $\bar k$ such that for each $k>\bar k$ 
+	\begin{equation}
+	\hat f_x(x^k,y^k)-\hat f_x\qty(x^k+\frac{\alpha^k}{r_x} d_x^k,y^k)< -\sigma_x\,\frac{\alpha^k}{r_x}^k d_x^k\,' \grad_x \hat f_x(x^k,y^k). \label{eqproof:alphamin}
+	\end{equation}	
+	Using equivalent arguments as above, we arrive to the conclusion that there is a subsequences $\{d_x^k\}_{\scr{\bar K}}$ that converges to some point $\bar d_x$ and that satisfies $0 \leq \bar d_x\,' \grad_x f(\bar x, \bar y)$ which, if the inequality is strict, contradicts the assumption that $d_x$ is gradient related , or contradicts the proof assumption that $(\bar x, \bar y)$ is not a stationary point. Therefore, by contradiction $(\bar x, \bar y)$ is a stationary point.  \frQED 
+\end{proof}
+
+
+
+\begin{theorem}[Capture Theorem]
+	Let $\{(x^k,y^k)\}$ be a sequence generated by the full descent ascent direction method using either the Theorem \ref{th:constant} or Theorem \ref{th:armijo}. Let $(x^*,y^*)$ be an isolated local minmax on a neighborhood where it is also the only stationary point. Then there exist a neighborhood $S_x\subset \Xcal$ around $x^*$ and a neighborhood $S_y\subset \Ycal$ around $y^*$  such that if for some $\bar k$, $(x^{\bar k},y^{\bar k})\in S_x\times S_y$ then  $\lim_{k,k>\bar k} (x^k,y^k)=(x^*,y^*)$. \frqed 
+\end{theorem}
+
+\begin{proof}
+	This proof is inspired by the proof of Prop. 1.2.4 of \cite{bertsekas_nonlinear}. Let the interval $[0,\delta_0]$ and the function $h(\cdot)$ be the ones associated to the local minmax $(x^*, y^*)$ according to Definition \ref{def:localminmax} . Take $\hat f_x(x,y)$ as defined in \eqref{eq:funsim} and, in order to have shorter expressions, let us define $d_x^k:=d_x(x^k,y^k)$ and $d_y^k:=d_y(x^{k+1},y^k)$.
+	
+
+	Let us now take a specific $\delta\in[0,\delta_0]$. By definition, $(x^*,y^*)$ is also a local minmax in that interval. Define for $t\in[0,\delta]$ and $t\in[0,h(\delta)]$ the functions
+	\begin{gather*}
+	\phi_x(t,y)=\min_{x\in\Xcal :t\leq\norm{x^*-x}\leq\delta} \hat f_x(x,y)-\hat f_x(x^*,y^*)\\
+	\phi_y(t,x)=\max_{y\in\Ycal:t\leq\norm{y^*-y}\leq h(\delta)} f(x,y)-f(x^*,y^*)
+	\end{gather*}
+	For a fixed $y$, $\phi_x(t,y)$ is an increasing function of $t$ and for a fixed $x$, $\phi_y(t,x)$ is a decreasing function of $t$. Given any $\epsilon_x\in(0,\delta]$ and $\epsilon_y\in(0,h(\delta)]$, take $r_x\in(0,\epsilon_x]$ and $r_y\in(0,\epsilon_y]$ such that 
+	\begin{subequations}
+		\begin{gather}
+		\norm{x-x^*}<r_x \imply \norm{x-x^*}+c_1\inv\norm{\grad_x\hat f_x(x,y)}<\epsilon_x \label{eqproof:capt_x} \\
+		\norm{y-y^*}<r_y \imply \norm{y-y^*}+c_3\inv\norm{\grad_yf(x,y)}<\epsilon_y \label{eqproof:capt_y}
+		\end{gather}
+	\end{subequations}
+	where $c_1$ and $c_3$ are from Assumption \ref{ass:converge}. Consider the open sets
+	\begin{gather*}
+	S_x:=\{x\in\Xcal: \norm{x-x^*}<\epsilon_x \tand  \forall y: \norm{y-y^*}<\epsilon_y,\   \hat f_x(x,y)-f(x^*,y^*)<\phi_x(r_x,y)\}\\
+	S_y:=\{y\in \Ycal: \norm{y-y^*}<\epsilon_y \tand  \forall x: \norm{x-x^*}<\epsilon_x ,\  f(x,y)-f(x^*,y^*)<\phi_y(r_y,x)\}.
+	\end{gather*}
+	
+	Now we prove that $x^k\in S_x\imply x^{k+1}\in S_x$ and that $y^k\in S_y\imply y^{k+1}\in S_y$. Starting with $x^k$, as $x^k\in S_x$ and $y^k\in S_y$, then
+	$$
+	\phi_x\qty(\norm{x^*-x^k},y^k)\leq \hat f_x(x^k,y^k)-f(x^*,y^*) < \phi_x(r_x,y^k)
+	$$
+	where the right inequality derives from the definition of $S_x$ and the left inequality from the definition of $\phi_x(\cdot)$. As $\phi_x(\cdot)$ is increasing in $t$, the previous relation implies $\norm{x^*-x^k}<r_x$. Now we use the fact that in both Theorem \ref{th:constant} and \ref{th:constant} we have that $\alpha^k\leq1$. Moreover, because the projection is a contracting map $\norm{d_x^k}\leq c_1\inv \norm{\grad_x\hat f_x(x^k,y^k)}$ we obtain
+	$$
+	\norm{x^{k+1}-x^*}\leq \norm{x^{k}-x^*}+ \norm{\alpha^k d_x^k} \leq \norm{x^{k}-x^*}+ c_1\inv \norm{\grad_x\hat f_x(x^k,y^k)} \leq \epsilon_x
+	$$
+	where the last inequality derives from \eqref{eqproof:capt_x}. Now looking back at the max from the previous equation we have that $\norm{x^{k+1}-x^*}\leq \epsilon_x$ which implies
+	$$
+	\phi_y\qty(\norm{y^*-y^k},x^{k+1})\geq f(x^{k+1},y^k)-f(x^*,y^*) > \phi_y(r_y,x^{k+1}).
+	$$
+	As $\phi_y(\cdot)$ is decreasing in $t$, the previous relation implies $\norm{y^*-y^k}<r_y$. Now using the assumptions that $\beta^k\leq 1$ (same argument as $\alpha^k$) and because the projection is a contracting map $\norm{d_y^k}\leq c_3\inv \norm{\grad_xf(x^{k+1},y^k)}$ we obtain
+	$$
+	\norm{y^{k+1}-y^*}\leq \norm{y^{k}-y^*}+\norm{\beta^k d_y^k} \leq \norm{y^{k}-y^*}+ c_3\inv \norm{\grad_xf(x^{k+1},y^k)} \leq \epsilon_y
+	$$
+	
+	As $\{(x^k,y^k)\}$ is a full descent ascent sequence
+	$$
+	\begin{cases}
+	\hat f_x(x^{k+1},y^k)-\hat f_x(x^*,y^*)\leq \hat f_x(x^{k},y^k)-\hat f_x(x^*,y^*)<\phi_x(r_x,y^k)   \\
+	\norm{x^{k+1}-x^*}\leq \epsilon_x \\
+	\norm{y^{k+1}-y^*}\leq \epsilon_y 
+	\end{cases} \imply x^{k+1}\in S_x
+	$$
+	and
+	$$
+	\begin{cases}
+	f(x^{k+1},y^{k+1})-f(x^*,y^*)\leq f(x^{k+1},y^k)-f(x^*,y^*)<\phi_y(r_y,x^{k+1})   \\
+	\norm{x^{k+1}-x^*}\leq \epsilon_x \\
+	\norm{y^{k+1}-y^*}\leq \epsilon_y 
+	\end{cases} \imply y^{k+1}\in S_y
+	$$
+	
+	Finally, by induction we have that if for some $\bar k$,  $x^{\bar k}\in S_x$ and $y^{\bar k}\in S_y$, then $x^k\in S_x$ and $y^k\in S_y$ $\forall k>\bar k$. Let $\bar S_x$ and $\bar S_y$ be the closure of $S_x$ and $S_y$. They are compact sets, therefore the sequence $(x^k,y^k)$ must have at least one limit point which is a stationary point according to Theorem \ref{th:constant} and Theorem \ref{th:armijo} . As the only stationary point is $(x^*,y^*)$, therefore $(x^k,y^k)\to(x^*,y^*)$. \frQED
+	
+	
+\end{proof}
+
+
+\end{document}
+´

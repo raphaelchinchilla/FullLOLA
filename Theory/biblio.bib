@@ -1,0 +1,1166 @@
+
+@article{jinWhatLocalOptimality2019,
+	archivePrefix = {arXiv},
+	eprinttype = {arxiv},
+	eprint = {1902.00618},
+	primaryClass = {cs, math, stat},
+	title = {What Is {{Local Optimality}} in {{Nonconvex}}-{{Nonconcave Minimax Optimization}}?},
+	url = {http://arxiv.org/abs/1902.00618},
+	abstract = {Minimax optimization has found extensive applications in modern machine learning, in settings such as generative adversarial networks (GANs), adversarial training and multi-agent reinforcement learning. As most of these applications involve continuous nonconvex-nonconcave formulations, a very basic question arises---``what is a proper definition of local optima?'' Most previous work answers this question using classical notions of equilibria from simultaneous games, where the min-player and the max-player act simultaneously. In contrast, most applications in machine learning, including GANs and adversarial training, correspond to sequential games, where the order of which player acts first is crucial (since minimax is in general not equal to maximin due to the nonconvex-nonconcave nature of the problems). The main contribution of this paper is to propose a proper mathematical definition of local optimality for this sequential setting---local minimax, as well as to present its properties and existence results. Finally, we establish a strong connection to a basic local search algorithm---gradient descent ascent (GDA): under mild conditions, all stable limit points of GDA are exactly local minimax points up to some degenerate points.},
+	year = {2019},
+	month = {feb},
+	keywords = {Mathematics - Optimization and Control,Statistics - Machine Learning,Computer Science - Machine Learning},
+	author = {Jin, Chi and Netrapalli, Praneeth and Jordan, Michael I.},
+}
+
+@techreport{hespanha2017tenscalc,
+	title={Tens{C}alc: A toolbox to generate fast code to solve nonlinear constrained minimizations and compute {N}ash equilibria.},
+	author={Hespanha, Jo{\~a}o P},
+	year={2017},
+	institution = {Center for Control, Dynamical Systems and Computation; University of California, Santa Barbara},	
+	address={https://github.com/hespanha/tenscalc}
+}
+
+@book{spall2005introduction,
+	title={Introduction to stochastic search and optimization: estimation, simulation, and control},
+	author={Spall, James C},
+	volume={65},
+	year={2005},
+	publisher={John Wiley \& Sons}
+}
+
+
+@book{bertsekas_nonlinear,
+	edition = {3rd},
+	title = {Nonlinear {Programming}},
+	abstract = {This book provides a comprehensive and accessible presentation of algorithms for solving continuous optimization problems. It relies on rigorous mathematical analysis, but also aims at an intuitive exposition that makes use of visualization where possible. It places particular emphasis on modern developments, and their widespread applications in fields such as large-scale resource allocation problems, signal processing, and machine learning.
+	
+	The book was developed through instruction at MIT, focuses on nonlinear and other types of optimization: iterative algorithms for constrained and unconstrained optimization, Lagrange multipliers and duality, large scale problems, and the interface between continuous and discrete optimization.},
+	publisher = {Athena Scientific},
+	author = {Bertsekas, Dimitri P.},
+	year = {2016},
+}
+
+@article{neumann1928theorie,
+	title={Zur theorie der gesellschaftsspiele},
+	author={von Neumann, John},
+	journal={Mathematische annalen},
+	volume={100},
+	number={1},
+	pages={295--320},
+	year={1928},
+	publisher={Springer}
+}
+
+
+@article{zhang_newton-type_2020,
+	title = {Newton-type {Methods} for {Minimax} {Optimization}},
+	url = {http://arxiv.org/abs/2006.14592},
+	abstract = {Differential games, in particular two-player sequential games (a.k.a. minimax optimization), have been an important modelling tool in applied science and received renewed interest in machine learning due to many recent applications. To account for the sequential and nonconvex nature, new solution concepts and algorithms have been developed. In this work, we provide a detailed analysis of existing algorithms and relate them to two novel Newton-type algorithms. We argue that our Newton-type algorithms nicely complement existing ones in that (a) they converge faster to (strict) local minimax points; (b) they are much more effective when the problem is ill-conditioned; (c) their computational complexity remains similar. We verify our theoretical results by conducting experiments on training GANs.},
+	urldate = {2020-10-01},
+	journal = {arXiv:2006.14592 [cs, math, stat]},
+	author = {Zhang, Guojun and Wu, Kaiwen and Poupart, Pascal and Yu, Yaoliang},
+	month = jun,
+	year = {2020},
+	note = {arXiv: 2006.14592},
+	file = {arXiv.org Snapshot:/home/chinchilla/Zotero/storage/VCBQ2NST/2006.html:text/html;Zhang et al_2020_Newton-type Methods for Minimax Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Zhang et al_2020_Newton-type Methods for Minimax Optimization.pdf:application/pdf},
+}
+
+@article{mangoubi_second-order_2020,
+	title = {A {Second}-order {Equilibrium} in {Nonconvex}-{Nonconcave} {Min}-max {Optimization}: {Existence} and {Algorithm}},
+	shorttitle = {A {Second}-order {Equilibrium} in {Nonconvex}-{Nonconcave} {Min}-max {Optimization}},
+	url = {http://arxiv.org/abs/2006.12363},
+	abstract = {Min-max optimization, with a nonconvex-nonconcave objective function \$f: {\textbackslash}mathbb\{R\}{\textasciicircum}d {\textbackslash}times {\textbackslash}mathbb\{R\}{\textasciicircum}d {\textbackslash}rightarrow {\textbackslash}mathbb\{R\}\$, arises in many areas, including optimization, economics, and deep learning. The nonconvexity-nonconcavity of \$f\$ means that the problem of finding a global \${\textbackslash}varepsilon\$-min-max point cannot be solved in \${\textbackslash}mathrm\{poly\}(d, {\textbackslash}frac\{1\}\{{\textbackslash}varepsilon\})\$ evaluations of \$f\$. Thus, most algorithms seek to obtain a certain notion of local min-max point where, roughly speaking, each player optimizes her payoff in a local sense. However, the classes of local min-max solutions which prior algorithms seek are only guaranteed to exist under very strong assumptions on \$f\$, such as convexity or monotonicity. We propose a notion of a greedy equilibrium point for min-max optimization and prove the existence of such a point for any function such that it and its first three derivatives are bounded. Informally, we say that a point \$(x{\textasciicircum}{\textbackslash}star, y{\textasciicircum}{\textbackslash}star)\$ is an \${\textbackslash}varepsilon\$-greedy min-max equilibrium point of a function \$f: {\textbackslash}mathbb\{R\}{\textasciicircum}d {\textbackslash}times {\textbackslash}mathbb\{R\}{\textasciicircum}d {\textbackslash}rightarrow {\textbackslash}mathbb\{R\}\$ if \$y{\textasciicircum}{\textbackslash}star\$ is a second-order local maximum for \$f(x{\textasciicircum}{\textbackslash}star,{\textbackslash}cdot)\$ and, roughly, \$x{\textasciicircum}{\textbackslash}star\$ is a local minimum for a greedy optimization version of the function \${\textbackslash}max\_y f(x,y)\$ which can be efficiently estimated using greedy algorithms. The existence follows from an algorithm that converges from any starting point to such a point in a number of gradient and function evaluations that is polynomial in \${\textbackslash}frac\{1\}\{{\textbackslash}varepsilon\}\$, the dimension \$d\$, and the bounds on \$f\$ and its first three derivatives. Our results do not require convexity, monotonicity, or special starting points.},
+	urldate = {2020-10-01},
+	journal = {arXiv:2006.12363 [cs, math, stat]},
+	author = {Mangoubi, Oren and Vishnoi, Nisheeth K.},
+	month = jun,
+	year = {2020},
+	note = {arXiv: 2006.12363},
+	file = {arXiv.org Snapshot:/home/chinchilla/Zotero/storage/LGYPB28H/2006.html:text/html;Mangoubi_Vishnoi_2020_A Second-order Equilibrium in Nonconvex-Nonconcave Min-max Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Mangoubi_Vishnoi_2020_A Second-order Equilibrium in Nonconvex-Nonconcave Min-max Optimization.pdf:application/pdf},
+}
+
+@article{rafique_non-convex_2019,
+	title = {Non-{Convex} {Min}-{Max} {Optimization}: {Provable} {Algorithms} and {Applications} in {Machine} {Learning}},
+	shorttitle = {Non-{Convex} {Min}-{Max} {Optimization}},
+	url = {http://arxiv.org/abs/1810.02060},
+	abstract = {Min-max saddle-point problems have broad applications in many tasks in machine learning, e.g., distributionally robust learning, learning with non-decomposable loss, or learning with uncertain data. Although convex-concave saddle-point problems have been broadly studied with efficient algorithms and solid theories available, it remains a challenge to design provably efficient algorithms for non-convex saddle-point problems, especially when the objective function involves an expectation or a large-scale finite sum. Motivated by recent literature on non-convex non-smooth minimization, this paper studies a family of non-convex min-max problems where the minimization component is non-convex (weakly convex) and the maximization component is concave. We propose a proximally guided stochastic subgradient method and a proximally guided stochastic variance-reduced method for expected and finite-sum saddle-point problems, respectively. We establish the computation complexities of both methods for finding a nearly stationary point of the corresponding minimization problem.},
+	urldate = {2020-09-29},
+	journal = {arXiv:1810.02060 [cs, math]},
+	author = {Rafique, Hassan and Liu, Mingrui and Lin, Qihang and Yang, Tianbao},
+	month = jan,
+	year = {2019},
+	note = {arXiv: 1810.02060},
+	file = {arXiv.org Snapshot:/home/chinchilla/Zotero/storage/JA2JMVSZ/1810.html:text/html;Rafique et al_2019_Non-Convex Min-Max Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Rafique et al_2019_Non-Convex Min-Max Optimization.pdf:application/pdf},
+}
+
+@book{ben-tal_robust_2009,
+	title = {Robust {Optimization}},
+	isbn = {978-1-4008-3105-0},
+	abstract = {Robust optimization is still a relatively new approach to optimization problems affected by uncertainty, but it has already proved so useful in real applications that it is difficult to tackle such problems today without considering this powerful methodology. Written by the principal developers of robust optimization, and describing the main achievements of a decade of research, this is the first book to provide a comprehensive and up-to-date account of the subject. Robust optimization is designed to meet some major challenges associated with uncertainty-affected optimization problems: to operate under lack of full information on the nature of uncertainty; to model the problem in a form that can be solved efficiently; and to provide guarantees about the performance of the solution. The book starts with a relatively simple treatment of uncertain linear programming, proceeding with a deep analysis of the interconnections between the construction of appropriate uncertainty sets and the classical chance constraints (probabilistic) approach. It then develops the robust optimization theory for uncertain conic quadratic and semidefinite optimization problems and dynamic (multistage) problems. The theory is supported by numerous examples and computational illustrations. An essential book for anyone working on optimization and decision making under uncertainty, Robust Optimization also makes an ideal graduate textbook on the subject.},
+	language = {en},
+	publisher = {Princeton University Press},
+	author = {Ben-Tal, Aharon and Ghaoui, Laurent El and Nemirovski, Arkadi},
+	month = aug,
+	year = {2009},
+}
+
+@article{bertsimas_theory_2011,
+	title = {Theory and {Applications} of {Robust} {Optimization}},
+	volume = {53},
+	issn = {0036-1445},
+	url = {https://epubs.siam.org/doi/abs/10.1137/080734510},
+	doi = {10.1137/080734510},
+	abstract = {In this paper we survey the primary research, both theoretical and applied, in the area of robust optimization (RO). Our focus is on the computational attractiveness of RO approaches, as well as the modeling power and broad applicability of the methodology. In addition to surveying prominent theoretical results of RO, we also present some recent results linking RO to adaptable models for multistage decision-making problems. Finally, we highlight applications of RO across a wide spectrum of domains, including finance, statistics, learning, and various areas of engineering.},
+	number = {3},
+	urldate = {2020-09-22},
+	journal = {SIAM Review},
+	author = {Bertsimas, Dimitris and Brown, David B. and Caramanis, Constantine},
+	month = jan,
+	year = {2011},
+	note = {Publisher: Society for Industrial and Applied Mathematics},
+	pages = {464--501},
+	file = {Bertsimas et al_2011_Theory and Applications of Robust Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Bertsimas et al_2011_Theory and Applications of Robust Optimization.pdf:application/pdf},
+}
+
+@article{mangoubi_provably_2020,
+	title = {A {Provably} {Convergent} and {Practical} {Algorithm} for {Min}-max {Optimization} with {Applications} to {GANs}},
+	url = {http://arxiv.org/abs/2006.12376},
+	abstract = {We present a new algorithm for optimizing min-max loss functions that arise in training GANs. We prove that our algorithm converges to an equilibrium point in time polynomial in the dimension, and smoothness parameters of the loss function. The point our algorithm converges to is stable when the maximizing player can respond using any sequence of steps which increase the loss at each step, and the minimizing player is empowered to simulate the maximizing player's response for arbitrarily many steps but is restricted to move according to updates sampled from a stochastic gradient oracle. We apply our algorithm to train GANs on Gaussian mixtures, MNIST and CIFAR-10. We observe that our algorithm trains stably and avoids mode collapse, while achieving a training time per iteration and memory requirement similar to gradient descent-ascent.},
+	urldate = {2020-09-21},
+	journal = {arXiv:2006.12376 [cs, math, stat]},
+	author = {Mangoubi, Oren and Sachdeva, Sushant and Vishnoi, Nisheeth K.},
+	month = jun,
+	year = {2020},
+	note = {arXiv: 2006.12376},
+	file = {Mangoubi et al_2020_A Provably Convergent and Practical Algorithm for Min-max Optimization with.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Mangoubi et al_2020_A Provably Convergent and Practical Algorithm for Min-max Optimization with.pdf:application/pdf},
+}
+
+@article{razaviyayn_nonconvex_2020,
+	title = {Nonconvex {Min}-{Max} {Optimization}: {Applications}, {Challenges}, and {Recent} {Theoretical} {Advances}},
+	volume = {37},
+	issn = {1558-0792},
+	shorttitle = {Nonconvex {Min}-{Max} {Optimization}},
+	doi = {10.1109/MSP.2020.3003851},
+	abstract = {The min-max optimization problem, also known as the saddle point problem, is a classical optimization problem that is also studied in the context of zero-sum games. Given a class of objective functions, the goal is to find a value for the argument that leads to a small objective value even for the worst-case function in the given class. Min-max optimization problems have recently become very popular in a wide range of signal and data processing applications, such as fair beamforming, training generative adversarial networks (GANs), and robust machine learning (ML), to just name a few.},
+	number = {5},
+	journal = {IEEE Signal Processing Magazine},
+	author = {Razaviyayn, Meisam and Huang, Tianjian and Lu, Songtao and Nouiehed, Maher and Sanjabi, Maziar and Hong, Mingyi},
+	month = sep,
+	year = {2020},
+	note = {Conference Name: IEEE Signal Processing Magazine},
+	pages = {55--66},
+	file = {IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/IJW6GNWE/9186144.html:text/html;Razaviyayn et al_2020_Nonconvex Min-Max Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Razaviyayn et al_2020_Nonconvex Min-Max Optimization.pdf:application/pdf},
+}
+
+@article{wang_solving_2019,
+	title = {On {Solving} {Minimax} {Optimization} {Locally}: {A} {Follow}-the-{Ridge} {Approach}},
+	shorttitle = {On {Solving} {Minimax} {Optimization} {Locally}},
+	url = {http://arxiv.org/abs/1910.07512},
+	abstract = {Many tasks in modern machine learning can be formulated as finding equilibria in {\textbackslash}emph\{sequential\} games. In particular, two-player zero-sum sequential games, also known as minimax optimization, have received growing interest. It is tempting to apply gradient descent to solve minimax optimization given its popularity and success in supervised learning. However, it has been noted that naive application of gradient descent fails to find some local minimax and can converge to non-local-minimax points. In this paper, we propose {\textbackslash}emph\{Follow-the-Ridge\} (FR), a novel algorithm that provably converges to and only converges to local minimax. We show theoretically that the algorithm addresses the notorious rotational behaviour of gradient dynamics, and is compatible with preconditioning and {\textbackslash}emph\{positive\} momentum. Empirically, FR solves toy minimax problems and improves the convergence of GAN training compared to the recent minimax optimization algorithms.},
+	urldate = {2020-09-21},
+	journal = {arXiv:1910.07512 [cs, math, stat]},
+	author = {Wang, Yuanhao and Zhang, Guodong and Ba, Jimmy},
+	month = nov,
+	year = {2019},
+	note = {arXiv: 1910.07512},
+	file = {Wang et al_2019_On Solving Minimax Optimization Locally.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Wang et al_2019_On Solving Minimax Optimization Locally.pdf:application/pdf},
+}
+
+@phdthesis{dunning_advances_nodate,
+	title = {Advances in {Robust} and {Adaptive} {Optimization}: {Algorithms}, {Software}, and {Insights}},
+	abstract = {Optimization in the presence of uncertainty is at the heart of operations research. There are many approaches to modeling the nature of this uncertainty, but this thesis focuses on developing new algorithms, software, and insights for an approach that has risen in popularity over the last 15 years: robust optimization (RO), and its extension to decision making across time, adaptive optimization (AO).},
+	language = {en},
+	author = {Dunning, Iain Robert},
+	file = {Dunning_Advances in Robust and Adaptive Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Dunning_Advances in Robust and Adaptive Optimization.pdf:application/pdf},
+}
+
+
+@article{bandi_tractable_2012,
+	title = {Tractable stochastic analysis in high dimensions via robust optimization},
+	volume = {134},
+	issn = {1436-4646},
+	url = {https://doi.org/10.1007/s10107-012-0567-2},
+	doi = {10.1007/s10107-012-0567-2},
+	abstract = {Modern probability theory, whose foundation is based on the axioms set forth by Kolmogorov, is currently the major tool for performance analysis in stochastic systems. While it offers insights in understanding such systems, probability theory, in contrast to optimization, has not been developed with computational tractability as an objective when the dimension increases. Correspondingly, some of its major areas of application remain unsolved when the underlying systems become multidimensional: Queueing networks, auction design in multi-item, multi-bidder auctions, network information theory, pricing multi-dimensional options, among others. We propose a new approach to analyze stochastic systems based on robust optimization. The key idea is to replace the Kolmogorov axioms and the concept of random variables as primitives of probability theory, with uncertainty sets that are derived from some of the asymptotic implications of probability theory like the central limit theorem. In addition, we observe that several desired system properties such as incentive compatibility and individual rationality in auction design are naturally expressed in the language of robust optimization. In this way, the performance analysis questions become highly structured optimization problems (linear, semidefinite, mixed integer) for which there exist efficient, practical algorithms that are capable of solving problems in high dimensions. We demonstrate that the proposed approach achieves computationally tractable methods for (a) analyzing queueing networks, (b) designing multi-item, multi-bidder auctions with budget constraints, and (c) pricing multi-dimensional options.},
+	language = {en},
+	number = {1},
+	urldate = {2020-02-15},
+	journal = {Mathematical Programming},
+	author = {Bandi, Chaithanya and Bertsimas, Dimitris},
+	month = aug,
+	year = {2012},
+	pages = {23--70},
+	file = {Bandi_Bertsimas_2012_Tractable stochastic analysis in high dimensions via robust optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Bandi_Bertsimas_2012_Tractable stochastic analysis in high dimensions via robust optimization.pdf:application/pdf},
+}
+
+@article{margellos_road_2014,
+	title = {On the {Road} {Between} {Robust} {Optimization} and the {Scenario} {Approach} for {Chance} {Constrained} {Optimization} {Problems}},
+	volume = {59},
+	issn = {2334-3303},
+	doi = {10.1109/TAC.2014.2303232},
+	abstract = {We propose a new method for solving chance constrained optimization problems that lies between robust optimization and scenario-based methods. Our method does not require prior knowledge of the underlying probability distribution as in robust optimization methods, nor is it based entirely on randomization as in the scenario approach. It instead involves solving a robust optimization problem with bounded uncertainty, where the uncertainty bounds are randomized and are computed using the scenario approach. To guarantee that the resulting robust problem is solvable we impose certain assumptions on the dependency of the constraint functions with respect to the uncertainty and show that tractability is ensured for a wide class of systems. Our results lead immediately to guidelines under which the proposed methodology or the scenario approach is preferable in terms of providing less conservative guarantees or reducing the computational cost.},
+	number = {8},
+	journal = {IEEE Transactions on Automatic Control},
+	author = {Margellos, Kostas and Goulart, Paul and Lygeros, John},
+	month = aug,
+	year = {2014},
+	note = {tex.ids: margellosRoadRobustOptimization2014b, margellosRoadRobustOptimization2014c},
+	pages = {2258--2263},
+	file = {IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/XRNG4GCF/6727399.html:text/html;IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/Y4D987YN/6727399.html:text/html;IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/KT9CEBFN/6727399.html:text/html;Margellos et al_2014_On the Road Between Robust Optimization and the Scenario Approach for Chance.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Margellos et al_2014_On the Road Between Robust Optimization and the Scenario Approach for Chance.pdf:application/pdf},
+}
+
+@article{gabrel_recent_2014,
+	title = {Recent advances in robust optimization: {An} overview},
+	volume = {235},
+	issn = {0377-2217},
+	shorttitle = {Recent advances in robust optimization},
+	url = {http://www.sciencedirect.com/science/article/pii/S0377221713007911},
+	doi = {10.1016/j.ejor.2013.09.036},
+	abstract = {This paper provides an overview of developments in robust optimization since 2007. It seeks to give a representative picture of the research topics most explored in recent years, highlight common themes in the investigations of independent research teams and highlight the contributions of rising as well as established researchers both to the theory of robust optimization and its practice. With respect to the theory of robust optimization, this paper reviews recent results on the cases without and with recourse, i.e., the static and dynamic settings, as well as the connection with stochastic optimization and risk theory, the concept of distributionally robust optimization, and findings in robust nonlinear optimization. With respect to the practice of robust optimization, we consider a broad spectrum of applications, in particular inventory and logistics, finance, revenue management, but also queueing networks, machine learning, energy systems and the public good. Key developments in the period from 2007 to present include: (i) an extensive body of work on robust decision-making under uncertainty with uncertain distributions, i.e., “robustifying” stochastic optimization, (ii) a greater connection with decision sciences by linking uncertainty sets to risk theory, (iii) further results on nonlinear optimization and sequential decision-making and (iv) besides more work on established families of examples such as robust inventory and revenue management, the addition to the robust optimization literature of new application areas, especially energy systems and the public good.},
+	language = {en},
+	number = {3},
+	urldate = {2019-11-07},
+	journal = {European Journal of Operational Research},
+	author = {Gabrel, Virginie and Murat, Cécile and Thiele, Aurélie},
+	month = jun,
+	year = {2014},
+	pages = {471--483},
+	file = {Gabrel et al_2014_Recent advances in robust optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Gabrel et al_2014_Recent advances in robust optimization.pdf:application/pdf},
+}
+
+@article{ben-tal_robust_2002,
+	title = {Robust optimization - methodology and applications},
+	volume = {92},
+	issn = {1436-4646},
+	url = {https://doi.org/10.1007/s101070100286},
+	doi = {10.1007/s101070100286},
+	abstract = {. Robust Optimization (RO) is a modeling methodology, combined with computational tools, to process optimization problems in which the data are uncertain and is only known to belong to some uncertainty set. The paper surveys the main results of RO as applied to uncertain linear, conic quadratic and semidefinite programming. For these cases, computationally tractable robust counterparts of uncertain problems are explicitly obtained, or good approximations of these counterparts are proposed, making RO a useful tool for real-world applications. We discuss some of these applications, specifically: antenna design, truss topology design and stability analysis/synthesis in uncertain dynamic systems. We also describe a case study of 90 LPs from the NETLIB collection. The study reveals that the feasibility properties of the usual solutions of real world LPs can be severely affected by small perturbations of the data and that the RO methodology can be successfully used to overcome this phenomenon.},
+	language = {en},
+	number = {3},
+	urldate = {2019-10-29},
+	journal = {Mathematical Programming},
+	author = {Ben-Tal, Aharon and Nemirovski, Arkadi},
+	month = may,
+	year = {2002},
+	pages = {453--480},
+	file = {Ben-Tal_Nemirovski_2002_Robust optimization – methodology and applications.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Ben-Tal_Nemirovski_2002_Robust optimization – methodology and applications.pdf:application/pdf},
+}
+
+@inproceedings{ebrahimi_continuous_2019,
+	title = {A {Continuous} {Time} {Dynamical} {System} {Approach} for {Solving} {Robust} {Optimization}},
+	doi = {10.23919/ECC.2019.8796115},
+	abstract = {We propose a dynamical system-based approach for solving robust optimization problems. The well-known continuous-time dynamical system for solving deterministic optimization problems arises in the form of primal-dual gradient dynamics where the vector field is derived as the gradient of the Lagrangian. The new continuous-time dynamical system we introduce for solving robust optimization problems differs from the primal-dual dynamics in the sense that the vector field is not derived as the gradient of the Lagrangian function. We call this new dynamical system as saddle point dynamics. In the saddle point dynamics, the uncertain variable arises as a dynamical state. For a general class of robust optimization problem, where the cost function is convex in decision variable and concave in uncertain variable, we show that the robust optimal solution can be recovered as a globally asymptotically stable equilibrium point of the saddle point dynamical system. Simulation results are presented to demonstrate the capability of this new dynamical system to solve various robust optimization problems. We also compare our proposed approach with existing methods based on robust counterpart and scenario-based random sampling.},
+	booktitle = {2019 18th {European} {Control} {Conference} ({ECC})},
+	author = {Ebrahimi, Keivan and Elia, Nicola and Vaidya, Umesh},
+	month = jun,
+	year = {2019},
+	pages = {1479--1485},
+	file = {IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/Q8UW44DP/8796115.html:text/html;Ebrahimi et al_2019_A Continuous Time Dynamical System Approach for Solving Robust Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Ebrahimi et al_2019_A Continuous Time Dynamical System Approach for Solving Robust Optimization.pdf:application/pdf},
+}
+
+@inproceedings{rawat_distributed_2018,
+	title = {Distributed {Method} of {Multiplier} for {Coupled} {Lagrangian} {Problems}: {A} {Control} {Approach}},
+	shorttitle = {Distributed {Method} of {Multiplier} for {Coupled} {Lagrangian} {Problems}},
+	doi = {10.23919/ACC.2018.8431650},
+	abstract = {In this paper, we propose a method for solving the distributed optimization problem in which the objective function is the sum of separable convex functions with linear constraints. In our approach, the primal variable is partially updated to make the Method of Multiplier algorithm distributed which is based on the suitable scaling of constraint matrix. The algorithm is then viewed as a dynamical system the convergence analysis of which is done using the passivity concepts of nonlinear control theory. The convexity of the function is related to the passivity of the non-linear functions which is in feedback with the positive real linear system.},
+	booktitle = {2018 {Annual} {American} {Control} {Conference} ({ACC})},
+	author = {Rawat, Abhishek and Elia, Nicola},
+	month = jun,
+	year = {2018},
+	note = {ISSN: 2378-5861},
+	pages = {6475--6480},
+	file = {IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/V83XPZSZ/8431650.html:text/html;Rawat_Elia_2018_Distributed Method of Multiplier for Coupled Lagrangian Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Rawat_Elia_2018_Distributed Method of Multiplier for Coupled Lagrangian Problems.pdf:application/pdf},
+}
+
+@article{esfandiari_saddle-point_2019,
+	title = {A {Saddle}-{Point} {Dynamical} {System} {Approach} for {Robust} {Deep} {Learning}},
+	url = {http://arxiv.org/abs/1910.08623},
+	abstract = {We propose a novel discrete-time dynamical system-based framework for achieving adversarial robustness in machine learning models. Our algorithm is originated from robust optimization, which aims to find the saddle point of a min-max optimization problem in the presence of uncertainties. The robust learning problem is formulated as a robust optimization problem, and we introduce a discrete-time algorithm based on a saddle-point dynamical system (SDS) to solve this problem. Under the assumptions that the cost function is convex and uncertainties enter concavely in the robust learning problem, we analytically show that using a diminishing step-size, the stochastic version of our algorithm, SSDS converges asymptotically to the robust optimal solution. The algorithm is deployed for the training of adversarially robust deep neural networks. Although such training involves highly non-convex non-concave robust optimization problems, empirical results show that the algorithm can achieve significant robustness for deep learning. We compare the performance of our SSDS model to other state-of-the-art robust models, e.g., trained using the projected gradient descent (PGD)-training approach. From the empirical results, we find that SSDS training is computationally inexpensive (compared to PGD-training) while achieving comparable performances. SSDS training also helps robust models to maintain a relatively high level of performance for clean data as well as under black-box attacks.},
+	urldate = {2019-10-26},
+	journal = {arXiv:1910.08623 [cs, stat]},
+	author = {Esfandiari, Yasaman and Ebrahimi, Keivan and Balu, Aditya and Elia, Nicola and Vaidya, Umesh and Sarkar, Soumik},
+	month = oct,
+	year = {2019},
+	note = {arXiv: 1910.08623},
+	file = {Esfandiari et al_2019_A Saddle-Point Dynamical System Approach for Robust Deep Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Esfandiari et al_2019_A Saddle-Point Dynamical System Approach for Robust Deep Learning.pdf:application/pdf},
+}
+
+@inproceedings{ma_primal-dual_2018,
+	title = {The {Primal}-{Dual} {Gradient} {Method} for {Non}-{Convex} {Robust} {Optimization} with an {Application} to the {Robust} {AC}-{OPF}},
+	doi = {10.1109/CDC.2018.8619620},
+	abstract = {The recent large-scale penetration of renewable energy in power networks has also introduced with it a risk of random variability. This new source of power uncertainty can fluctuate so substantially that the traditional base-point forecast and control scheme may fail to work. To address this challenge, we study the so-called robust AC optimal power flow (AC-OPF) so as to provide robust control solutions that can immunize the power system against the intermittent renewables. In this paper we generalize the continuous-time primal-dual gradient dynamics approach to solve the robust AC-OPF. One advantage of the proposed approach is that it does not require any convexity assumptions for the decision variables during the dynamical evolution. This paper first derives a stability analysis for the primal-dual dynamics associated with a generic robust optimization, and then applies the primal-dual dynamics to the robust AC-OPF problem. Simulation results are also provided to demonstrate the effectiveness of the proposed approach.},
+	booktitle = {2018 {IEEE} {Conference} on {Decision} and {Control} ({CDC})},
+	author = {Ma, Xu and Vaidya, Umesh and Elia, Nicola},
+	month = dec,
+	year = {2018},
+	note = {ISSN: 2576-2370, 0743-1546},
+	pages = {6532--6537},
+	file = {IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/7MLWXI8K/8619620.html:text/html;Ma et al_2018_The Primal-Dual Gradient Method for Non-Convex Robust Optimization with an.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Ma et al_2018_The Primal-Dual Gradient Method for Non-Convex Robust Optimization with an.pdf:application/pdf},
+}
+
+@inproceedings{wang_control_2011,
+	title = {A control perspective for centralized and distributed convex optimization},
+	doi = {10.1109/CDC.2011.6161503},
+	abstract = {In this paper, we want to study how natural and engineered systems could perform complex optimizations with limited computational and communication capabilities. We adopt a continuous-time dynamical system view rooted in early work on optimization and more recently in network protocol design, and merge it with the dynamic view of distributed averaging systems. We obtain a general approach, based on the control system viewpoint, that allows to analyze and design (distributed) optimization systems converging to the solution of given convex optimization problems. The control system viewpoint provides many insights and new directions of research. We apply the framework to a distributed optimal location problem and demonstrate the natural tracking and adaptation capabilities of the system to changing constraints.},
+	booktitle = {2011 50th {IEEE} {Conference} on {Decision} and {Control} and {European} {Control} {Conference}},
+	author = {Wang, Jing and Elia, Nicola},
+	month = dec,
+	year = {2011},
+	note = {ISSN: 0191-2216, 0743-1546, 0743-1546},
+	pages = {3800--3805},
+	file = {IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/GYLT6YTP/6161503.html:text/html;Wang_Elia_2011_A control perspective for centralized and distributed convex optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Wang_Elia_2011_A control perspective for centralized and distributed convex optimization.pdf:application/pdf},
+}
+
+@article{lin_near-optimal_2020,
+	title = {Near-{Optimal} {Algorithms} for {Minimax} {Optimization}},
+	url = {http://arxiv.org/abs/2002.02417},
+	abstract = {This paper resolves a longstanding open question pertaining to the design of near-optimal first-order algorithms for smooth and strongly-convex-strongly-concave minimax problems. Current state-of-the-art first-order algorithms find an approximate Nash equilibrium using \${\textbackslash}tilde\{O\}({\textbackslash}kappa\_\{{\textbackslash}mathbf x\}+{\textbackslash}kappa\_\{{\textbackslash}mathbf y\})\$ or \${\textbackslash}tilde\{O\}({\textbackslash}min{\textbackslash}\{{\textbackslash}kappa\_\{{\textbackslash}mathbf x\}{\textbackslash}sqrt\{{\textbackslash}kappa\_\{{\textbackslash}mathbf y\}\}, {\textbackslash}sqrt\{{\textbackslash}kappa\_\{{\textbackslash}mathbf x\}\}{\textbackslash}kappa\_\{{\textbackslash}mathbf y\}{\textbackslash}\})\$ gradient evaluations, where \${\textbackslash}kappa\_\{{\textbackslash}mathbf x\}\$ and \${\textbackslash}kappa\_\{{\textbackslash}mathbf y\}\$ are the condition numbers for the strong-convexity and strong-concavity assumptions. A gap still remains between these results and the best existing lower bound \${\textbackslash}tilde\{{\textbackslash}Omega\}({\textbackslash}sqrt\{{\textbackslash}kappa\_\{{\textbackslash}mathbf x\}{\textbackslash}kappa\_\{{\textbackslash}mathbf y\}\})\$. This paper presents the first algorithm with \${\textbackslash}tilde\{O\}({\textbackslash}sqrt\{{\textbackslash}kappa\_\{{\textbackslash}mathbf x\}{\textbackslash}kappa\_\{{\textbackslash}mathbf y\}\})\$ gradient complexity, matching the lower bound up to logarithmic factors. Our algorithm is designed based on an accelerated proximal point method and an accelerated solver for minimax proximal steps. It can be easily extended to the settings of strongly-convex-concave, convex-concave, nonconvex-strongly-concave, and nonconvex-concave functions. This paper also presents algorithms that match or outperform all existing methods in these settings in terms of gradient complexity, up to logarithmic factors.},
+urldate = {2020-10-15},
+journal = {arXiv:2002.02417 [cs, math, stat]},
+author = {Lin, Tianyi and Jin, Chi and Jordan, Michael I.},
+month = jun,
+year = {2020},
+note = {arXiv: 2002.02417},
+file = {Lin et al_2020_Near-Optimal Algorithms for Minimax Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Lin et al_2020_Near-Optimal Algorithms for Minimax Optimization.pdf:application/pdf;arXiv.org Snapshot:/home/chinchilla/Zotero/storage/WD6J723Q/2002.html:text/html},
+}
+
+@article{daskalakis_limit_nodate,
+	title = {The {Limit} {Points} of ({Optimistic}) {Gradient} {Descent} in {Min}-{Max} {Optimization}},
+	abstract = {Motivated by applications in Optimization, Game Theory, and the training of Generative Adversarial Networks, the convergence properties of ﬁrst order methods in min-max problems have received extensive study. It has been recognized that they may cycle, and there is no good understanding of their limit points when they do not. When they converge, do they converge to local min-max solutions? We characterize the limit points of two basic ﬁrst order methods, namely Gradient Descent/Ascent (GDA) and Optimistic Gradient Descent Ascent (OGDA). We show that both dynamics avoid unstable critical points for almost all initializations. Moreover, for small step sizes and under mild assumptions, the set of OGDA-stable critical points is a superset of GDA-stable critical points, which is a superset of local min-max solutions (strict in some cases). The connecting thread is that the behavior of these dynamics can be studied from a dynamical systems perspective.},
+	language = {en},
+	author = {Daskalakis, Constantinos and Panageas, Ioannis},
+	keywords = {Important},
+	pages = {11},
+	file = {Daskalakis_Panageas_The Limit Points of (Optimistic) Gradient Descent in Min-Max Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Daskalakis_Panageas_The Limit Points of (Optimistic) Gradient Descent in Min-Max Optimization2.pdf:application/pdf},
+}
+
+@article{nouiehed_solving_nodate,
+	title = {Solving a {Class} of {Non}-{Convex} {Min}-{Max} {Games} {Using} {Iterative} {First} {Order} {Methods}},
+	abstract = {Recent applications that arise in machine learning have surged signiﬁcant interest in solving min-max saddle point games. This problem has been extensively studied in the convex-concave regime for which a global equilibrium solution can be computed efﬁciently. In this paper, we study the problem in the non-convex regime and show that an ε–ﬁrst order stationary point of the game can be computed when one of the player’s objective can be optimized to global optimality efﬁciently. In particular, we ﬁrst consider the case where the objective of one of the players satisﬁes the Polyak-Łojasiewicz (PL) condition. For such a game, we show that a simple multi-step gradient descent-ascent algorithm ﬁnds an ε–ﬁrst order stationary point of the problem in O(ε−2) iterations. Then we show that our framework can also be applied to the case where the objective of the “max-player" is concave. In this case, we propose a multi-step gradient descent-ascent algorithm that ﬁnds an ε–ﬁrst order stationary point of the game in O(ε−3.5) iterations, which is the best known rate in the literature. We applied our algorithm to a fair classiﬁcation problem of Fashion-MNIST dataset and observed that the proposed algorithm results in smoother training and better generalization.},
+	language = {en},
+	author = {Nouiehed, Maher and Sanjabi, Maziar and Huang, Tianjian and Lee, Jason D and Razaviyayn, Meisam},
+	pages = {9},
+	file = {Nouiehed et al_Solving a Class of Non-Convex Min-Max Games Using Iterative First Order Methods.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Nouiehed et al_Solving a Class of Non-Convex Min-Max Games Using Iterative First Order Methods.pdf:application/pdf},
+}
+
+@article{shamma_dynamic_2005,
+	title = {Dynamic fictitious play, dynamic gradient play, and distributed convergence to {Nash} equilibria},
+	volume = {50},
+	issn = {1558-2523},
+	doi = {10.1109/TAC.2005.843878},
+	abstract = {We consider a continuous-time form of repeated matrix games in which player strategies evolve in reaction to opponent actions. Players observe each other's actions, but do not have access to other player utilities. Strategy evolution may be of the best response sort, as in fictitious play, or a gradient update. Such mechanisms are known to not necessarily converge. We introduce a form of "dynamic" fictitious and gradient play strategy update mechanisms. These mechanisms use derivative action in processing opponent actions and, in some cases, can lead to behavior converging to Nash equilibria in previously nonconvergent situations. We analyze convergence in the case of exact and approximate derivative measurements of the dynamic update mechanisms. In the ideal case of exact derivative measurements, we show that convergence to Nash equilibrium can always be achieved. In the case of approximate derivative measurements, we derive a characterization of local convergence that shows how the dynamic update mechanisms can converge if the traditional static counterparts do not. We primarily discuss two player games, but also outline extensions to multiplayer games. We illustrate these methods with convergent simulations of the well known Shapley and Jordan counterexamples.},
+	number = {3},
+	journal = {IEEE Transactions on Automatic Control},
+	author = {Shamma, J. S. and Arslan, G.},
+	month = mar,
+	year = {2005},
+	note = {Conference Name: IEEE Transactions on Automatic Control},
+	pages = {312--327},
+	file = {Shamma_Arslan_2005_Dynamic fictitious play, dynamic gradient play, and distributed convergence to.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Shamma_Arslan_2005_Dynamic fictitious play, dynamic gradient play, and distributed convergence to.pdf:application/pdf;IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/RPGQENGL/1406126.html:text/html},
+}
+
+@article{dai_optimality_2020,
+	title = {Optimality {Conditions} for {Constrained} {Minimax} {Optimization}},
+	url = {http://arxiv.org/abs/2004.09730},
+	abstract = {Minimax optimization problems arises from both modern machine learning including generative adversarial networks, adversarial training and multi-agent reinforcement learning, as well as from tradition research areas such as saddle point problems, numerical partial diﬀerential equations and optimality conditions of equality constrained optimization. For the unconstrained continuous nonconvex-nonconcave situation, Jin, Netrapalli and Jordan (2019) carefully considered the very basic question: what is a proper deﬁnition of local optima of a minimax optimization problem, and proposed a proper deﬁnition of local optimality called local minimax. We shall extend the deﬁnition of local minimax point to constrained nonconvex-nonconcave minimax optimization problems. By analyzing Jacobian uniqueness conditions for the lowerlevel maximization problem and the strong regularity of Karush-Kuhn-Tucker conditions of the maximization problem, we provide both necessary optimality conditions and suﬃcient optimality conditions for the local minimax points of constrained minimax optimization problems.},
+	language = {en},
+	urldate = {2020-11-21},
+	journal = {arXiv:2004.09730 [math]},
+	author = {Dai, Yu-HOng and Zhang, Liwei},
+	month = apr,
+	year = {2020},
+	note = {arXiv: 2004.09730},
+	file = {Dai and Zhang - 2020 - Optimality Conditions for Constrained Minimax Opti.pdf:/home/chinchilla/Zotero/storage/GQHDY9Y3/Dai and Zhang - 2020 - Optimality Conditions for Constrained Minimax Opti.pdf:application/pdf},
+}
+
+@article{yan_optimal_nodate,
+	title = {Optimal {Epoch} {Stochastic} {Gradient} {Descent} {Ascent} {Methods} for {Min}-{Max} {Optimization}},
+	abstract = {Epoch gradient descent method (a.k.a. Epoch-GD) proposed by [16] was deemed a breakthrough for stochastic strongly convex minimization, which achieves the optimal convergence rate of O(1/T ) with T iterative updates for the objective gap. However, its extension to solving stochastic min-max problems with strong convexity and strong concavity still remains open, and it is still unclear whether a fast rate of O(1/T ) for the duality gap is achievable for stochastic min-max optimization under strong convexity and strong concavity. Although some recent studies have proposed stochastic algorithms with fast convergence rates for min-max problems, they require additional assumptions about the problem, e.g., smoothness, bi-linear structure, etc. In this paper, we bridge this gap by providing a sharp analysis of epoch-wise stochastic gradient descent ascent method (referred to as Epoch-GDA) for solving strongly convex strongly concave (SCSC) min-max problems, without imposing any additional assumption about smoothness or the function’s structure. To the best of our knowledge, our result is the ﬁrst one that shows Epoch-GDA can achieve the optimal rate of O(1/T ) for the duality gap of general SCSC min-max problems. We emphasize that such generalization of Epoch-GD for strongly convex minimization problems to Epoch-GDA for SCSC min-max problems is non-trivial and requires novel technical analysis. Moreover, we notice that the key lemma can also be used for proving the convergence of Epoch-GDA for weakly-convex strongly-concave min-max problems, leading to a nearly optimal complexity without resorting to smoothness or other structural conditions.},
+	language = {en},
+	author = {Yan, Yan and Xu, Yi and Lin, Qihang and Liu, Wei and Yang, Tianbao},
+	pages = {12},
+	file = {Yan et al. - Optimal Epoch Stochastic Gradient Descent Ascent M.pdf:/home/chinchilla/Zotero/storage/YYWV5J68/Yan et al. - Optimal Epoch Stochastic Gradient Descent Ascent M.pdf:application/pdf},
+}
+
+@article{lin_gradient_2020,
+	title = {On {Gradient} {Descent} {Ascent} for {Nonconvex}-{Concave} {Minimax} {Problems}},
+	url = {http://arxiv.org/abs/1906.00331},
+	abstract = {We consider nonconvex-concave minimax problems, minx maxy∈Y f (x, y) where f is nonconvex in x but concave in y and Y is a convex and bounded set. One of the most popular algorithms for solving this problem is the celebrated gradient descent ascent (GDA) algorithm, which has been widely used in machine learning, control theory and economics. Despite the extensive convergence results for the convex-concave setting, GDA with equal stepsize can converge to limit cycles or even diverge in a general setting. In this paper, we present the complexity results on two-time-scale GDA for solving nonconvex-concave minimax problems, showing that the algorithm can ﬁnd a stationary point of the function Φ(·) := maxy∈Y f (·, y) eﬃciently. To the best our knowledge, this is the ﬁrst nonasymptotic analysis for two-time-scale GDA in this setting, shedding light on its superior practical performance in training generative adversarial networks (GANs) and other real applications.},
+	language = {en},
+	urldate = {2020-11-25},
+	journal = {arXiv:1906.00331 [cs, math, stat]},
+	author = {Lin, Tianyi and Jin, Chi and Jordan, Michael I.},
+	month = jun,
+	year = {2020},
+	note = {arXiv: 1906.00331},
+	file = {Lin et al_2020_On Gradient Descent Ascent for Nonconvex-Concave Minimax Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Lin et al_2020_On Gradient Descent Ascent for Nonconvex-Concave Minimax Problems.pdf:application/pdf},
+}
+
+@article{adolphs_local_2019,
+	title = {Local {Saddle} {Point} {Optimization}: {A} {Curvature} {Exploitation} {Approach}},
+	shorttitle = {Local {Saddle} {Point} {Optimization}},
+	url = {http://arxiv.org/abs/1805.05751},
+	abstract = {Gradient-based optimization methods are the most popular choice for ﬁnding local optima for classical minimization and saddle point problems. Here, we highlight a systemic issue of gradient dynamics that arise for saddle point problems, namely the presence of undesired stable stationary points that are no local optima. We propose a novel optimization approach that exploits curvature information in order to escape from these undesired stationary points. We prove that diﬀerent optimization methods, including gradient method and Adagrad, equipped with curvature exploitation can escape non-optimal stationary points. We also provide empirical results on common saddle point problems which conﬁrm the advantage of using curvature exploitation.},
+	language = {en},
+	urldate = {2020-11-25},
+	journal = {arXiv:1805.05751 [cs, math, stat]},
+	author = {Adolphs, Leonard and Daneshmand, Hadi and Lucchi, Aurelien and Hofmann, Thomas},
+	month = feb,
+	year = {2019},
+	note = {arXiv: 1805.05751},
+	file = {Adolphs et al_2019_Local Saddle Point Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Adolphs et al_2019_Local Saddle Point Optimization.pdf:application/pdf},
+}
+
+@article{mazumdar_finding_2019,
+	title = {On {Finding} {Local} {Nash} {Equilibria} (and {Only} {Local} {Nash} {Equilibria}) in {Zero}-{Sum} {Games}},
+	url = {http://arxiv.org/abs/1901.00838},
+	abstract = {We propose local symplectic surgery, a two-timescale procedure for finding local Nash equilibria in two-player zero-sum games. We first show that previous gradient-based algorithms cannot guarantee convergence to local Nash equilibria due to the existence of non-Nash stationary points. By taking advantage of the differential structure of the game, we construct an algorithm for which the local Nash equilibria are the only attracting fixed points. We also show that the algorithm exhibits no oscillatory behaviors in neighborhoods of equilibria and show that it has the same per-iteration complexity as other recently proposed algorithms. We conclude by validating the algorithm on two numerical examples: a toy example with multiple Nash equilibria and a non-Nash equilibrium, and the training of a small generative adversarial network (GAN).},
+	urldate = {2020-11-25},
+	journal = {arXiv:1901.00838 [cs, math, stat]},
+	author = {Mazumdar, Eric V. and Jordan, Michael I. and Sastry, S. Shankar},
+	month = jan,
+	year = {2019},
+	note = {arXiv: 1901.00838},
+	file = {Mazumdar et al_2019_On Finding Local Nash Equilibria (and Only Local Nash Equilibria) in Zero-Sum.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Mazumdar et al_2019_On Finding Local Nash Equilibria (and Only Local Nash Equilibria) in Zero-Sum.pdf:application/pdf;arXiv.org Snapshot:/home/chinchilla/Zotero/storage/RG9GQ9J5/1901.html:text/html},
+}
+
+@article{heusel_gans_nodate,
+	title = {{GANs} {Trained} by a {Two} {Time}-{Scale} {Update} {Rule} {Converge} to a {Local} {Nash} {Equilibrium}},
+	abstract = {Generative Adversarial Networks (GANs) excel at creating realistic images with complex models for which maximum likelihood is infeasible. However, the convergence of GAN training has still not been proved. We propose a two time-scale update rule (TTUR) for training GANs with stochastic gradient descent on arbitrary GAN loss functions. TTUR has an individual learning rate for both the discriminator and the generator. Using the theory of stochastic approximation, we prove that the TTUR converges under mild assumptions to a stationary local Nash equilibrium. The convergence carries over to the popular Adam optimization, for which we prove that it follows the dynamics of a heavy ball with friction and thus prefers ﬂat minima in the objective landscape. For the evaluation of the performance of GANs at image generation, we introduce the ‘Fréchet Inception Distance” (FID) which captures the similarity of generated images to real ones better than the Inception Score. In experiments, TTUR improves learning for DCGANs and Improved Wasserstein GANs (WGAN-GP) outperforming conventional GAN training on CelebA, CIFAR-10, SVHN, LSUN Bedrooms, and the One Billion Word Benchmark.},
+	language = {en},
+	author = {Heusel, Martin and Ramsauer, Hubert and Unterthiner, Thomas and Nessler, Bernhard and Hochreiter, Sepp},
+	pages = {12},
+	file = {Heusel et al_GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Heusel et al_GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash.pdf:application/pdf},
+}
+
+@article{balduzzi_mechanics_2018,
+	title = {The {Mechanics} of n-{Player} {Differentiable} {Games}},
+	url = {http://arxiv.org/abs/1802.05642},
+	abstract = {The cornerstone underpinning deep learning is the guarantee that gradient descent on an objective converges to local minima. Unfortunately, this guarantee fails in settings, such as generative adversarial nets, where there are multiple interacting losses. The behavior of gradient-based methods in games is not well understood – and is becoming increasingly important as adversarial and multiobjective architectures proliferate. In this paper, we develop new techniques to understand and control the dynamics in general games. The key result is to decompose the second-order dynamics into two components. The ﬁrst is related to potential games, which reduce to gradient descent on an implicit function; the second relates to Hamiltonian games, a new class of games that obey a conservation law, akin to conservation laws in classical mechanical systems. The decomposition motivates Symplectic Gradient Adjustment (SGA), a new algorithm for ﬁnding stable ﬁxed points in general games. Basic experiments show SGA is competitive with recently proposed algorithms for ﬁnding stable ﬁxed points in GANs – whilst at the same time being applicable to – and having guarantees in – much more general games.},
+	language = {en},
+	urldate = {2020-11-25},
+	journal = {arXiv:1802.05642 [cs]},
+	author = {Balduzzi, David and Racaniere, Sebastien and Martens, James and Foerster, Jakob and Tuyls, Karl and Graepel, Thore},
+	month = jun,
+	year = {2018},
+	note = {arXiv: 1802.05642},
+	file = {Balduzzi et al_2018_The Mechanics of n-Player Differentiable Games.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Balduzzi et al_2018_The Mechanics of n-Player Differentiable Games.pdf:application/pdf},
+}
+
+@article{mertikopoulos_optimistic_2019,
+	title = {Optimistic {Mirror} {Descent} in {Saddle}-{Point} {Problems}: {Going} the {Extra} ({Gradient}) {Mile}},
+	abstract = {Owing to their connection with generative adversarial networks (GANs), saddlepoint problems have recently attracted considerable interest in machine learning and beyond. By necessity, most theoretical guarantees revolve around convexconcave (or even linear) problems; however, making theoretical inroads towards eﬃcient GAN training depends crucially on moving beyond this classic framework. To make piecemeal progress along these lines, we analyze the behavior of mirror descent (MD) in a class of non-monotone problems whose solutions coincide with those of a naturally associated variational inequality – a property which we call coherence. We ﬁrst show that ordinary, “vanilla” MD converges under a strict version of this condition, but not otherwise; in particular, it may fail to converge even in bilinear models with a unique solution. We then show that this deﬁciency is mitigated by optimism: by taking an “extra-gradient” step, optimistic mirror descent (OMD) converges in all coherent problems. Our analysis generalizes and extends the results of Daskalakis et al. [2018] for optimistic gradient descent (OGD) in bilinear problems, and makes concrete headway for provable convergence beyond convex-concave games. We also provide stochastic analogues of these results, and we validate our analysis by numerical experiments in a wide array of GAN models (including Gaussian mixture models, and the CelebA and CIFAR-10 datasets).},
+	language = {en},
+	author = {Mertikopoulos, Panayotis and Lecouat, Bruno and Zenati, Houssam and Foo, Chuan-Sheng and Chandrasekhar, Vijay and Piliouras, Georgios},
+	year = {2019},
+	pages = {24},
+	file = {Mertikopoulos et al_2019_Optimistic Mirror Descent in Saddle-Point Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Mertikopoulos et al_2019_Optimistic Mirror Descent in Saddle-Point Problems.pdf:application/pdf},
+}
+
+@article{liu_first-order_2020,
+	title = {First-order {Convergence} {Theory} for {Weakly}-{Convex}-{Weakly}-{Concave} {Min}-max {Problems}},
+	url = {http://arxiv.org/abs/1810.10207},
+	abstract = {In this paper, we consider first-order convergence theory and algorithms for solving a class of non-convex non-concave min-max saddle-point problems, whose objective function is weakly convex in the variables of minimization and weakly concave in the variables of maximization. It has many important applications in machine learning including training Generative Adversarial Nets (GANs). We propose an algorithmic framework motivated by the inexact proximal point method, where the weakly monotone variational inequality (VI) corresponding to the original min-max problem is solved through approximately solving a sequence of strongly monotone VIs constructed by adding a strongly monotone mapping to the original gradient mapping. We prove first-order convergence to a nearly stationary solution of the original min-max problem of the generic algorithmic framework and establish different rates by employing different algorithms for solving each strongly monotone VI. Experiments verify the convergence theory and also demonstrate the effectiveness of the proposed methods on training GANs.},
+	urldate = {2020-11-25},
+	journal = {arXiv:1810.10207 [math, stat]},
+	author = {Liu, Mingrui and Rafique, Hassan and Lin, Qihang and Yang, Tianbao},
+	month = may,
+	year = {2020},
+	note = {arXiv: 1810.10207
+	version: 3},
+	file = {Liu et al_2020_First-order Convergence Theory for Weakly-Convex-Weakly-Concave Min-max Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Liu et al_2020_First-order Convergence Theory for Weakly-Convex-Weakly-Concave Min-max Problems.pdf:application/pdf;arXiv.org Snapshot:/home/chinchilla/Zotero/storage/D2I3LXIS/1810.html:text/html},
+}
+
+@article{reisizadeh_robust_2020,
+	title = {Robust {Federated} {Learning}: {The} {Case} of {Affine} {Distribution} {Shifts}},
+	shorttitle = {Robust {Federated} {Learning}},
+	url = {http://arxiv.org/abs/2006.08907},
+	abstract = {Federated learning is a distributed paradigm for training models using samples distributed across multiple users in a network, while keeping the samples on users’ devices with the aim of eﬃciency and protecting users privacy. In such settings, the training data is often statistically heterogeneous and manifests various distribution shifts across users, which degrades the performance of the learnt model. The primary goal of this paper is to develop a robust federated learning algorithm that achieves satisfactory performance against distribution shifts in users’ samples. To achieve this goal, we ﬁrst consider a structured aﬃne distribution shift in users’ data that captures the device-dependent data heterogeneity in federated settings. This perturbation model is applicable to various federated learning problems such as image classiﬁcation where the images undergo device-dependent imperfections, e.g. diﬀerent intensity, contrast, and brightness. To address aﬃne distribution shifts across users, we propose a Federated Learning framework Robust to Aﬃne distribution shifts (FLRA) that is robust against aﬃne distribution shifts to the distribution of observed samples. To solve the FLRA’s distributed minimax optimization problem, we propose a fast and eﬃcient optimization method and provide convergence and performance guarantees via a gradient Descent Ascent (GDA) method. We further prove generalization error bounds for the learnt classiﬁer to show proper generalization from empirical distribution of samples to the true underlying distribution. We perform several numerical experiments to empirically support FLRA. We show that an aﬃne distribution shift indeed suﬃces to signiﬁcantly decrease the performance of the learnt classiﬁer in a new test user, and our proposed algorithm achieves a signiﬁcant gain in comparison to standard federated learning and adversarial training methods.},
+	language = {en},
+	urldate = {2020-12-02},
+	journal = {arXiv:2006.08907 [cs, math, stat]},
+	author = {Reisizadeh, Amirhossein and Farnia, Farzan and Pedarsani, Ramtin and Jadbabaie, Ali},
+	month = jun,
+	year = {2020},
+	note = {arXiv: 2006.08907},
+	file = {Reisizadeh et al_2020_Robust Federated Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Reisizadeh et al_2020_Robust Federated Learning.pdf:application/pdf},
+}
+
+@article{lu_hybrid_2020,
+	title = {Hybrid {Block} {Successive} {Approximation} for {One}-{Sided} {Non}-{Convex} {Min}-{Max} {Problems}: {Algorithms} and {Applications}},
+	volume = {68},
+	issn = {1941-0476},
+	shorttitle = {Hybrid {Block} {Successive} {Approximation} for {One}-{Sided} {Non}-{Convex} {Min}-{Max} {Problems}},
+	doi = {10.1109/TSP.2020.2986363},
+	abstract = {The min-max problem, also known as the saddle point problem, is a class of optimization problems which minimizes and maximizes two subsets of variables simultaneously. This class of problems can be used to formulate a wide range of signal processing and communication (SPCOM) problems. Despite its popularity, most existing theory for this class has been mainly developed for problems with certain special convex-concave structure. Therefore, it cannot be used to guide the algorithm design for many interesting problems in SPCOM, where various kinds of non-convexity arise. In this work, we consider a block-wise one-sided non-convex min-max problem, in which the minimization problem consists of multiple blocks and is non-convex, while the maximization problem is (strongly) concave. We propose a class of simple algorithms named Hybrid Block Successive Approximation (HiBSA), which alternatingly performs gradient descent-type steps for the minimization blocks and gradient ascent-type steps for the maximization problem. A key element in the proposed algorithm is the use of certain regularization and penalty sequences, which stabilize the algorithm and ensure convergence. We show that HiBSA converges to some properly defined first-order stationary solutions with quantifiable global rates. To validate the efficiency of the proposed algorithms, we conduct numerical tests on a number of problems, including the robust learning problem, the non-convex min-utility maximization problems, and certain wireless jamming problem arising in interfering channels.},
+	journal = {IEEE Transactions on Signal Processing},
+	author = {Lu, S. and Tsaknakis, I. and Hong, M. and Chen, Y.},
+	year = {2020},
+	note = {Conference Name: IEEE Transactions on Signal Processing},
+	pages = {3676--3691},
+	file = {Lu et al_2020_Hybrid Block Successive Approximation for One-Sided Non-Convex Min-Max Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Lu et al_2020_Hybrid Block Successive Approximation for One-Sided Non-Convex Min-Max Problems.pdf:application/pdf},
+}
+
+@article{bailey_finite_nodate,
+	title = {Finite {Regret} and {Cycles} with {Fixed} {Step}-{Size} via {Alternating} {Gradient} {Descent}-{Ascent}},
+	abstract = {Gradient descent is arguably one of the most popular online optimization methods with a wide array of applications. However, the standard implementation where agents simultaneously update their strategies yields several undesirable properties; strategies diverge away from equilibrium and regret grows over time. In this paper, we eliminate these negative properties by considering a different implementation to obtain O (1/T ) time-average regret via arbitrary ﬁxed step-size. We obtain this surprising property by having agents take turns when updating their strategies. In this setting, we show that an agent that uses gradient descent with any linear loss function obtains bounded regret –regardless of how their opponent updates their strategies. Furthermore, we show that in adversarial settings that agents’ strategies are bounded and cycle when both are using the alternating gradient descent algorithm.},
+	language = {en},
+	author = {Bailey, James P and Gidel, Gauthier and Piliouras, Georgios},
+	pages = {17},
+	file = {Bailey et al_Finite Regret and Cycles with Fixed Step-Size via Alternating Gradient.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Bailey et al_Finite Regret and Cycles with Fixed Step-Size via Alternating Gradient.pdf:application/pdf},
+}
+
+
+
+@article{singh_harnessing_2019,
+	title = {Harnessing the {Vulnerability} of {Latent} {Layers} in {Adversarially} {Trained} {Models}},
+	url = {http://arxiv.org/abs/1905.05186},
+	abstract = {Neural networks are vulnerable to adversarial attacks -- small visually imperceptible crafted noise which when added to the input drastically changes the output. The most effective method of defending against these adversarial attacks is to use the methodology of adversarial training. We analyze the adversarially trained robust models to study their vulnerability against adversarial attacks at the level of the latent layers. Our analysis reveals that contrary to the input layer which is robust to adversarial attack, the latent layer of these robust models are highly susceptible to adversarial perturbations of small magnitude. Leveraging this information, we introduce a new technique Latent Adversarial Training (LAT) which comprises of fine-tuning the adversarially trained models to ensure the robustness at the feature layers. We also propose Latent Attack (LA), a novel algorithm for construction of adversarial examples. LAT results in minor improvement in test accuracy and leads to a state-of-the-art adversarial accuracy against the universal first-order adversarial PGD attack which is shown for the MNIST, CIFAR-10, CIFAR-100 datasets.},
+	urldate = {2020-07-20},
+	journal = {arXiv:1905.05186 [cs, stat]},
+	author = {Singh, Mayank and Sinha, Abhishek and Kumari, Nupur and Machiraju, Harshitha and Krishnamurthy, Balaji and Balasubramanian, Vineeth N.},
+	month = jun,
+	year = {2019},
+	note = {arXiv: 1905.05186},
+	file = {Singh et al_2019_Harnessing the Vulnerability of Latent Layers in Adversarially Trained Models.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Singh et al_2019_Harnessing the Vulnerability of Latent Layers in Adversarially Trained Models.pdf:application/pdf},
+}
+
+@misc{chan_purdue_2018,
+	title = {Purdue {ECE} 595 {Lecture} {Notes} on {Machine} {Learning}},
+	url = {https://engineering.purdue.edu/ChanGroup/ECE595/},
+	language = {English},
+	urldate = {2020-04-29},
+	author = {Chan, Stanley},
+	year = {2018},
+	file = {Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning4.pdf:application/pdf;Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning2.pdf:application/pdf;Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning3.pdf:application/pdf;Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Chan_2018_Purdue ECE 595 Lecture Notes on Machine Learning.pdf:application/pdf},
+}
+
+@article{wong_fast_2020,
+	title = {Fast is better than free: {Revisiting} adversarial training},
+	shorttitle = {Fast is better than free},
+	url = {http://arxiv.org/abs/2001.03994},
+	abstract = {Adversarial training, a method for learning robust deep networks, is typically assumed to be more expensive than traditional training due to the necessity of constructing adversarial examples via a first-order method like projected gradient decent (PGD). In this paper, we make the surprising discovery that it is possible to train empirically robust models using a much weaker and cheaper adversary, an approach that was previously believed to be ineffective, rendering the method no more costly than standard training in practice. Specifically, we show that adversarial training with the fast gradient sign method (FGSM), when combined with random initialization, is as effective as PGD-based training but has significantly lower cost. Furthermore we show that FGSM adversarial training can be further accelerated by using standard techniques for efficient training of deep networks, allowing us to learn a robust CIFAR10 classifier with 45\% robust accuracy to PGD attacks with \${\textbackslash}epsilon=8/255\$ in 6 minutes, and a robust ImageNet classifier with 43\% robust accuracy at \${\textbackslash}epsilon=2/255\$ in 12 hours, in comparison to past work based on "free" adversarial training which took 10 and 50 hours to reach the same respective thresholds. Finally, we identify a failure mode referred to as "catastrophic overfitting" which may have caused previous attempts to use FGSM adversarial training to fail. All code for reproducing the experiments in this paper as well as pretrained model weights are at https://github.com/locuslab/fast\_adversarial.},
+	urldate = {2020-04-19},
+	journal = {arXiv:2001.03994 [cs, stat]},
+	author = {Wong, Eric and Rice, Leslie and Kolter, J. Zico},
+	month = jan,
+	year = {2020},
+	note = {arXiv: 2001.03994},
+	file = {Wong et al_2020_Fast is better than free.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Wong et al_2020_Fast is better than free.pdf:application/pdf},
+}
+
+@article{madry_towards_2019,
+	title = {Towards {Deep} {Learning} {Models} {Resistant} to {Adversarial} {Attacks}},
+	url = {http://arxiv.org/abs/1706.06083},
+	abstract = {Recent work has demonstrated that deep neural networks are vulnerable to adversarial examples---inputs that are almost indistinguishable from natural data and yet classified incorrectly by the network. In fact, some of the latest findings suggest that the existence of adversarial attacks may be an inherent weakness of deep learning models. To address this problem, we study the adversarial robustness of neural networks through the lens of robust optimization. This approach provides us with a broad and unifying view on much of the prior work on this topic. Its principled nature also enables us to identify methods for both training and attacking neural networks that are reliable and, in a certain sense, universal. In particular, they specify a concrete security guarantee that would protect against any adversary. These methods let us train networks with significantly improved resistance to a wide range of adversarial attacks. They also suggest the notion of security against a first-order adversary as a natural and broad security guarantee. We believe that robustness against such well-defined classes of adversaries is an important stepping stone towards fully resistant deep learning models. Code and pre-trained models are available at https://github.com/MadryLab/mnist\_challenge and https://github.com/MadryLab/cifar10\_challenge.},
+	urldate = {2020-01-27},
+	journal = {arXiv:1706.06083 [cs, stat]},
+	author = {Madry, Aleksander and Makelov, Aleksandar and Schmidt, Ludwig and Tsipras, Dimitris and Vladu, Adrian},
+	month = sep,
+	year = {2019},
+	note = {arXiv: 1706.06083},
+	keywords = {Favorite},
+	file = {Madry et al_2019_Towards Deep Learning Models Resistant to Adversarial Attacks.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Madry et al_2019_Towards Deep Learning Models Resistant to Adversarial Attacks.pdf:application/pdf},
+}
+
+@article{szegedy_intriguing_2014,
+	title = {Intriguing properties of neural networks},
+	url = {http://arxiv.org/abs/1312.6199},
+	abstract = {Deep neural networks are highly expressive models that have recently achieved state of the art performance on speech and visual recognition tasks. While their expressiveness is the reason they succeed, it also causes them to learn uninterpretable solutions that could have counter-intuitive properties. In this paper we report two such properties. First, we find that there is no distinction between individual high level units and random linear combinations of high level units, according to various methods of unit analysis. It suggests that it is the space, rather than the individual units, that contains of the semantic information in the high layers of neural networks. Second, we find that deep neural networks learn input-output mappings that are fairly discontinuous to a significant extend. We can cause the network to misclassify an image by applying a certain imperceptible perturbation, which is found by maximizing the network's prediction error. In addition, the specific nature of these perturbations is not a random artifact of learning: the same perturbation can cause a different network, that was trained on a different subset of the dataset, to misclassify the same input.},
+	urldate = {2019-10-31},
+	journal = {arXiv:1312.6199 [cs]},
+	author = {Szegedy, Christian and Zaremba, Wojciech and Sutskever, Ilya and Bruna, Joan and Erhan, Dumitru and Goodfellow, Ian and Fergus, Rob},
+	month = feb,
+	year = {2014},
+	note = {arXiv: 1312.6199},
+	file = {Szegedy et al_2014_Intriguing properties of neural networks.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Szegedy et al_2014_Intriguing properties of neural networks.pdf:application/pdf},
+}
+
+@article{tramer_adaptive_2020,
+	title = {On {Adaptive} {Attacks} to {Adversarial} {Example} {Defenses}},
+	url = {http://arxiv.org/abs/2002.08347},
+	abstract = {Adaptive attacks have (rightfully) become the de facto standard for evaluating defenses to adversarial examples. We find, however, that typical adaptive evaluations are incomplete. We demonstrate that thirteen defenses recently published at ICLR, ICML and NeurIPS---and chosen for illustrative and pedagogical purposes---can be circumvented despite attempting to perform evaluations using adaptive attacks. While prior evaluation papers focused mainly on the end result---showing that a defense was ineffective---this paper focuses on laying out the methodology and the approach necessary to perform an adaptive attack. We hope that these analyses will serve as guidance on how to properly perform adaptive attacks against defenses to adversarial examples, and thus will allow the community to make further progress in building more robust models.},
+	urldate = {2020-03-05},
+	journal = {arXiv:2002.08347 [cs, stat]},
+	author = {Tramer, Florian and Carlini, Nicholas and Brendel, Wieland and Madry, Aleksander},
+	month = feb,
+	year = {2020},
+	note = {arXiv: 2002.08347},
+	file = {Tramer et al_2020_On Adaptive Attacks to Adversarial Example Defenses.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Tramer et al_2020_On Adaptive Attacks to Adversarial Example Defenses.pdf:application/pdf},
+}
+
+@article{lu_no_2017,
+	title = {{NO} {Need} to {Worry} about {Adversarial} {Examples} in {Object} {Detection} in {Autonomous} {Vehicles}},
+	url = {https://arxiv.org/abs/1707.03501v1},
+	abstract = {It has been shown that most machine learning algorithms are susceptible to
+	adversarial perturbations. Slightly perturbing an image in a carefully chosen
+	direction in the image space may cause a trained neural network model to
+	misclassify it. Recently, it was shown that physical adversarial examples
+	exist: printing perturbed images then taking pictures of them would still
+	result in misclassification. This raises security and safety concerns.
+	However, these experiments ignore a crucial property of physical objects: the
+	camera can view objects from different distances and at different angles. In
+	this paper, we show experiments that suggest that current constructions of
+	physical adversarial examples do not disrupt object detection from a moving
+	platform. Instead, a trained neural network classifies most of the pictures
+	taken from different distances and angles of a perturbed image correctly. We
+	believe this is because the adversarial property of the perturbation is
+	sensitive to the scale at which the perturbed picture is viewed, so (for
+	example) an autonomous car will misclassify a stop sign only from a small range
+	of distances.
+	Our work raises an important question: can one construct examples that are
+	adversarial for many or most viewing conditions? If so, the construction should
+	offer very significant insights into the internal representation of patterns by
+	deep networks. If not, there is a good prospect that adversarial examples can
+	be reduced to a curiosity with little practical impact.},
+	language = {en},
+	urldate = {2020-02-21},
+	author = {Lu, Jiajun and Sibai, Hussein and Fabry, Evan and Forsyth, David},
+	month = jul,
+	year = {2017},
+	file = {Lu et al_2017_NO Need to Worry about Adversarial Examples in Object Detection in Autonomous.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Lu et al_2017_NO Need to Worry about Adversarial Examples in Object Detection in Autonomous.pdf:application/pdf},
+}
+
+@article{tramer_ensemble_2018,
+	title = {Ensemble {Adversarial} {Training}: {Attacks} and {Defenses}},
+	shorttitle = {Ensemble {Adversarial} {Training}},
+	url = {http://arxiv.org/abs/1705.07204},
+	abstract = {Adversarial examples are perturbed inputs designed to fool machine learning models. Adversarial training injects such examples into training data to increase robustness. To scale this technique to large datasets, perturbations are crafted using fast single-step methods that maximize a linear approximation of the model's loss. We show that this form of adversarial training converges to a degenerate global minimum, wherein small curvature artifacts near the data points obfuscate a linear approximation of the loss. The model thus learns to generate weak perturbations, rather than defend against strong ones. As a result, we find that adversarial training remains vulnerable to black-box attacks, where we transfer perturbations computed on undefended models, as well as to a powerful novel single-step attack that escapes the non-smooth vicinity of the input data via a small random step. We further introduce Ensemble Adversarial Training, a technique that augments training data with perturbations transferred from other models. On ImageNet, Ensemble Adversarial Training yields models with strong robustness to black-box attacks. In particular, our most robust model won the first round of the NIPS 2017 competition on Defenses against Adversarial Attacks.},
+	urldate = {2020-01-26},
+	journal = {arXiv:1705.07204 [cs, stat]},
+	author = {Tramèr, Florian and Kurakin, Alexey and Papernot, Nicolas and Goodfellow, Ian and Boneh, Dan and McDaniel, Patrick},
+	month = jul,
+	year = {2018},
+	note = {arXiv: 1705.07204},
+	file = {Tramèr et al_2018_Ensemble Adversarial Training.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Tramèr et al_2018_Ensemble Adversarial Training.pdf:application/pdf},
+}
+
+@article{miyato_virtual_2019,
+	title = {Virtual {Adversarial} {Training}: {A} {Regularization} {Method} for {Supervised} and {Semi}-{Supervised} {Learning}},
+	volume = {41},
+	issn = {1939-3539},
+	shorttitle = {Virtual {Adversarial} {Training}},
+	doi = {10.1109/TPAMI.2018.2858821},
+	abstract = {We propose a new regularization method based on virtual adversarial loss: a new measure of local smoothness of the conditional label distribution given input. Virtual adversarial loss is defined as the robustness of the conditional label distribution around each input data point against local perturbation. Unlike adversarial training, our method defines the adversarial direction without label information and is hence applicable to semi-supervised learning. Because the directions in which we smooth the model are only “virtually” adversarial, we call our method virtual adversarial training (VAT). The computational cost of VAT is relatively low. For neural networks, the approximated gradient of virtual adversarial loss can be computed with no more than two pairs of forward-and back-propagations. In our experiments, we applied VAT to supervised and semi-supervised learning tasks on multiple benchmark datasets. With a simple enhancement of the algorithm based on the entropy minimization principle, our VAT achieves state-of-the-art performance for semi-supervised learning tasks on SVHN and CIFAR-10.},
+	number = {8},
+	journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+	author = {Miyato, Takeru and Maeda, Shin-Ichi and Koyama, Masanori and Ishii, Shin},
+	month = aug,
+	year = {2019},
+	pages = {1979--1993},
+	file = {IEEE Xplore Abstract Record:/home/chinchilla/Zotero/storage/GXJ5VQNX/8417973.html:text/html;Miyato et al_2019_Virtual Adversarial Training.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Miyato et al_2019_Virtual Adversarial Training.pdf:application/pdf},
+}
+
+@article{eykholt_robust_2018,
+	title = {Robust {Physical}-{World} {Attacks} on {Deep} {Learning} {Models}},
+	url = {http://arxiv.org/abs/1707.08945},
+	abstract = {Recent studies show that the state-of-the-art deep neural networks (DNNs) are vulnerable to adversarial examples, resulting from small-magnitude perturbations added to the input. Given that that emerging physical systems are using DNNs in safety-critical situations, adversarial examples could mislead these systems and cause dangerous situations.Therefore, understanding adversarial examples in the physical world is an important step towards developing resilient learning algorithms. We propose a general attack algorithm,Robust Physical Perturbations (RP2), to generate robust visual adversarial perturbations under different physical conditions. Using the real-world case of road sign classification, we show that adversarial examples generated using RP2 achieve high targeted misclassification rates against standard-architecture road sign classifiers in the physical world under various environmental conditions, including viewpoints. Due to the current lack of a standardized testing method, we propose a two-stage evaluation methodology for robust physical adversarial examples consisting of lab and field tests. Using this methodology, we evaluate the efficacy of physical adversarial manipulations on real objects. Witha perturbation in the form of only black and white stickers,we attack a real stop sign, causing targeted misclassification in 100\% of the images obtained in lab settings, and in 84.8\%of the captured video frames obtained on a moving vehicle(field test) for the target classifier.},
+	urldate = {2020-01-26},
+	journal = {arXiv:1707.08945 [cs]},
+	author = {Eykholt, Kevin and Evtimov, Ivan and Fernandes, Earlence and Li, Bo and Rahmati, Amir and Xiao, Chaowei and Prakash, Atul and Kohno, Tadayoshi and Song, Dawn},
+	month = apr,
+	year = {2018},
+	note = {arXiv: 1707.08945},
+	file = {Eykholt et al_2018_Robust Physical-World Attacks on Deep Learning Models.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Eykholt et al_2018_Robust Physical-World Attacks on Deep Learning Models.pdf:application/pdf},
+}
+
+@article{fawzi_robustness_2016,
+	title = {Robustness of classifiers: from adversarial to random noise},
+	shorttitle = {Robustness of classifiers},
+	url = {http://papers.nips.cc/paper/6331-robustness-of-classifiers-from-adversarial-to-random-noise.pdf},
+	urldate = {2019-10-31},
+	journal = {Advances in Neural Information Processing Systems 29},
+	author = {Fawzi, Alhussein and Moosavi-Dezfooli, Seyed-Mohsen and Frossard, Pascal},
+	editor = {Lee, D. D. and Sugiyama, M. and Luxburg, U. V. and Guyon, I. and Garnett, R.},
+	year = {2016},
+	pages = {1632--1640},
+	file = {Fawzi et al_2016_Robustness of classifiers.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Fawzi et al_2016_Robustness of classifiers.pdf:application/pdf},
+}
+
+@article{moosavi-dezfooli_universal_2017,
+	title = {Universal adversarial perturbations},
+	url = {http://arxiv.org/abs/1610.08401},
+	abstract = {Given a state-of-the-art deep neural network classifier, we show the existence of a universal (image-agnostic) and very small perturbation vector that causes natural images to be misclassified with high probability. We propose a systematic algorithm for computing universal perturbations, and show that state-of-the-art deep neural networks are highly vulnerable to such perturbations, albeit being quasi-imperceptible to the human eye. We further empirically analyze these universal perturbations and show, in particular, that they generalize very well across neural networks. The surprising existence of universal perturbations reveals important geometric correlations among the high-dimensional decision boundary of classifiers. It further outlines potential security breaches with the existence of single directions in the input space that adversaries can possibly exploit to break a classifier on most natural images.},
+	urldate = {2019-10-31},
+	journal = {arXiv:1610.08401 [cs, stat]},
+	author = {Moosavi-Dezfooli, Seyed-Mohsen and Fawzi, Alhussein and Fawzi, Omar and Frossard, Pascal},
+	month = mar,
+	year = {2017},
+	note = {arXiv: 1610.08401},
+	file = {Moosavi-Dezfooli et al_2017_Universal adversarial perturbations.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Moosavi-Dezfooli et al_2017_Universal adversarial perturbations.pdf:application/pdf},
+}
+
+@article{moosavi-dezfooli_deepfool:_2016,
+	title = {{DeepFool}: a simple and accurate method to fool deep neural networks},
+	shorttitle = {{DeepFool}},
+	url = {http://arxiv.org/abs/1511.04599},
+	abstract = {State-of-the-art deep neural networks have achieved impressive results on many image classification tasks. However, these same architectures have been shown to be unstable to small, well sought, perturbations of the images. Despite the importance of this phenomenon, no effective methods have been proposed to accurately compute the robustness of state-of-the-art deep classifiers to such perturbations on large-scale datasets. In this paper, we fill this gap and propose the DeepFool algorithm to efficiently compute perturbations that fool deep networks, and thus reliably quantify the robustness of these classifiers. Extensive experimental results show that our approach outperforms recent methods in the task of computing adversarial perturbations and making classifiers more robust.},
+	urldate = {2019-10-31},
+	journal = {arXiv:1511.04599 [cs]},
+	author = {Moosavi-Dezfooli, Seyed-Mohsen and Fawzi, Alhussein and Frossard, Pascal},
+	month = jul,
+	year = {2016},
+	note = {arXiv: 1511.04599},
+	file = {Moosavi-Dezfooli et al_2016_DeepFool.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Moosavi-Dezfooli et al_2016_DeepFool.pdf:application/pdf},
+}
+
+@article{riviere_inspirational_2019,
+	title = {Inspirational {Adversarial} {Image} {Generation}},
+	url = {http://arxiv.org/abs/1906.11661},
+	abstract = {The task of image generation started to receive some attention from artists and designers to inspire them in new creations. However, exploiting the results of deep generative models such as Generative Adversarial Networks can be long and tedious given the lack of existing tools. In this work, we propose a simple strategy to inspire creators with new generations learned from a dataset of their choice, while providing some control on them. We design a simple optimization method to find the optimal latent parameters corresponding to the closest generation to any input inspirational image. Specifically, we allow the generation given an inspirational image of the user choice by performing several optimization steps to recover optimal parameters from the model's latent space. We tested several exploration methods starting with classic gradient descents to gradient-free optimizers. Many gradient-free optimizers just need comparisons (better/worse than another image), so that they can even be used without numerical criterion, without inspirational image, but with only with human preference. Thus, by iterating on one's preferences we could make robust Facial Composite or Fashion Generation algorithms. High resolution of the produced design generations are obtained using progressive growing of GANs. Our results on four datasets of faces, fashion images, and textures show that satisfactory images are effectively retrieved in most cases.},
+	urldate = {2019-10-30},
+	journal = {arXiv:1906.11661 [cs, stat]},
+	author = {Riviere, Morgane and Teytaud, Olivier and Rapin, Jérémy and LeCun, Yann and Couprie, Camille},
+	month = jun,
+	year = {2019},
+	note = {arXiv: 1906.11661},
+	file = {Riviere et al_2019_Inspirational Adversarial Image Generation.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Riviere et al_2019_Inspirational Adversarial Image Generation.pdf:application/pdf},
+}
+
+@article{goodfellow_explaining_2015,
+	title = {Explaining and {Harnessing} {Adversarial} {Examples}},
+	url = {http://arxiv.org/abs/1412.6572},
+	abstract = {Several machine learning models, including neural networks, consistently misclassify adversarial examples---inputs formed by applying small but intentionally worst-case perturbations to examples from the dataset, such that the perturbed input results in the model outputting an incorrect answer with high confidence. Early attempts at explaining this phenomenon focused on nonlinearity and overfitting. We argue instead that the primary cause of neural networks' vulnerability to adversarial perturbation is their linear nature. This explanation is supported by new quantitative results while giving the first explanation of the most intriguing fact about them: their generalization across architectures and training sets. Moreover, this view yields a simple and fast method of generating adversarial examples. Using this approach to provide examples for adversarial training, we reduce the test set error of a maxout network on the MNIST dataset.},
+	urldate = {2019-10-30},
+	journal = {arXiv:1412.6572 [cs, stat]},
+	author = {Goodfellow, Ian J. and Shlens, Jonathon and Szegedy, Christian},
+	month = mar,
+	year = {2015},
+	note = {arXiv: 1412.6572},
+	file = {Goodfellow et al_2015_Explaining and Harnessing Adversarial Examples.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Goodfellow et al_2015_Explaining and Harnessing Adversarial Examples.pdf:application/pdf},
+}
+
+@article{carlini_evaluating_2019,
+	title = {On {Evaluating} {Adversarial} {Robustness}},
+	url = {http://arxiv.org/abs/1902.06705},
+	abstract = {Correctly evaluating defenses against adversarial examples has proven to be extremely difficult. Despite the significant amount of recent work attempting to design defenses that withstand adaptive attacks, few have succeeded; most papers that propose defenses are quickly shown to be incorrect. We believe a large contributing factor is the difficulty of performing security evaluations. In this paper, we discuss the methodological foundations, review commonly accepted best practices, and suggest new methods for evaluating defenses to adversarial examples. We hope that both researchers developing defenses as well as readers and reviewers who wish to understand the completeness of an evaluation consider our advice in order to avoid common pitfalls.},
+	urldate = {2019-10-30},
+	journal = {arXiv:1902.06705 [cs, stat]},
+	author = {Carlini, Nicholas and Athalye, Anish and Papernot, Nicolas and Brendel, Wieland and Rauber, Jonas and Tsipras, Dimitris and Goodfellow, Ian and Madry, Aleksander and Kurakin, Alexey},
+	month = feb,
+	year = {2019},
+	note = {arXiv: 1902.06705},
+	file = {Carlini et al_2019_On Evaluating Adversarial Robustness.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Carlini et al_2019_On Evaluating Adversarial Robustness.pdf:application/pdf},
+}
+
+@article{huang_learning_2015,
+	title = {Learning with a {Strong} {Adversary}},
+	url = {https://arxiv.org/abs/1511.03034v6},
+	abstract = {The robustness of neural networks to intended perturbations has recently
+	attracted significant attention. In this paper, we propose a new method,
+	{\textbackslash}emph\{learning with a strong adversary\}, that learns robust classifiers from
+	supervised data. The proposed method takes finding adversarial examples as an
+	intermediate step. A new and simple way of finding adversarial examples is
+	presented and experimentally shown to be efficient. Experimental results
+	demonstrate that resulting learning method greatly improves the robustness of
+	the classification models produced.},
+	language = {en},
+	urldate = {2019-10-30},
+	author = {Huang, Ruitong and Xu, Bing and Schuurmans, Dale and Szepesvari, Csaba},
+	month = nov,
+	year = {2015},
+	file = {Huang et al_2015_Learning with a Strong Adversary.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Huang et al_2015_Learning with a Strong Adversary.pdf:application/pdf},
+}
+
+@article{shaham_understanding_2018,
+	title = {Understanding adversarial training: {Increasing} local stability of supervised models through robust optimization},
+	volume = {307},
+	issn = {0925-2312},
+	shorttitle = {Understanding adversarial training},
+	url = {http://www.sciencedirect.com/science/article/pii/S0925231218304557},
+	doi = {10.1016/j.neucom.2018.04.027},
+	abstract = {We show that adversarial training of supervised learning models is in fact a robust optimization procedure. To do this, we establish a general framework for increasing local stability of supervised learning models using robust optimization. The framework is general and broadly applicable to differentiable non-parametric models, e.g., Artificial Neural Networks (ANNs). Using an alternating minimization-maximization procedure, the loss of the model is minimized with respect to perturbed examples that are generated at each parameter update, rather than with respect to the original training data. Our proposed framework generalizes adversarial training, as well as previous approaches for increasing local stability of ANNs. Experimental results reveal that our approach increases the robustness of the network to existing adversarial examples, while making it harder to generate new ones. Furthermore, our algorithm improves the accuracy of the networks also on the original test data.},
+	language = {en},
+	urldate = {2019-10-29},
+	journal = {Neurocomputing},
+	author = {Shaham, Uri and Yamada, Yutaro and Negahban, Sahand},
+	month = sep,
+	year = {2018},
+	pages = {195--204},
+	file = {Shaham et al_2018_Understanding adversarial training.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Shaham et al_2018_Understanding adversarial training.pdf:application/pdf},
+}
+
+@article{esfandiari_saddle-point_2019,
+	title = {A {Saddle}-{Point} {Dynamical} {System} {Approach} for {Robust} {Deep} {Learning}},
+	url = {http://arxiv.org/abs/1910.08623},
+	abstract = {We propose a novel discrete-time dynamical system-based framework for achieving adversarial robustness in machine learning models. Our algorithm is originated from robust optimization, which aims to find the saddle point of a min-max optimization problem in the presence of uncertainties. The robust learning problem is formulated as a robust optimization problem, and we introduce a discrete-time algorithm based on a saddle-point dynamical system (SDS) to solve this problem. Under the assumptions that the cost function is convex and uncertainties enter concavely in the robust learning problem, we analytically show that using a diminishing step-size, the stochastic version of our algorithm, SSDS converges asymptotically to the robust optimal solution. The algorithm is deployed for the training of adversarially robust deep neural networks. Although such training involves highly non-convex non-concave robust optimization problems, empirical results show that the algorithm can achieve significant robustness for deep learning. We compare the performance of our SSDS model to other state-of-the-art robust models, e.g., trained using the projected gradient descent (PGD)-training approach. From the empirical results, we find that SSDS training is computationally inexpensive (compared to PGD-training) while achieving comparable performances. SSDS training also helps robust models to maintain a relatively high level of performance for clean data as well as under black-box attacks.},
+	urldate = {2019-10-26},
+	journal = {arXiv:1910.08623 [cs, stat]},
+	author = {Esfandiari, Yasaman and Ebrahimi, Keivan and Balu, Aditya and Elia, Nicola and Vaidya, Umesh and Sarkar, Soumik},
+	month = oct,
+	year = {2019},
+	note = {arXiv: 1910.08623},
+	file = {Esfandiari et al_2019_A Saddle-Point Dynamical System Approach for Robust Deep Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Esfandiari et al_2019_A Saddle-Point Dynamical System Approach for Robust Deep Learning.pdf:application/pdf},
+}
+
+@article{daskalakis_limit_nodate,
+	title = {The {Limit} {Points} of ({Optimistic}) {Gradient} {Descent} in {Min}-{Max} {Optimization}},
+	abstract = {Motivated by applications in Optimization, Game Theory, and the training of Generative Adversarial Networks, the convergence properties of ﬁrst order methods in min-max problems have received extensive study. It has been recognized that they may cycle, and there is no good understanding of their limit points when they do not. When they converge, do they converge to local min-max solutions? We characterize the limit points of two basic ﬁrst order methods, namely Gradient Descent/Ascent (GDA) and Optimistic Gradient Descent Ascent (OGDA). We show that both dynamics avoid unstable critical points for almost all initializations. Moreover, for small step sizes and under mild assumptions, the set of OGDA-stable critical points is a superset of GDA-stable critical points, which is a superset of local min-max solutions (strict in some cases). The connecting thread is that the behavior of these dynamics can be studied from a dynamical systems perspective.},
+	language = {en},
+	author = {Daskalakis, Constantinos and Panageas, Ioannis},
+	keywords = {Important},
+	pages = {11},
+	file = {Daskalakis_Panageas_The Limit Points of (Optimistic) Gradient Descent in Min-Max Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Daskalakis_Panageas_The Limit Points of (Optimistic) Gradient Descent in Min-Max Optimization2.pdf:application/pdf},
+}
+
+@article{nouiehed_solving_nodate,
+	title = {Solving a {Class} of {Non}-{Convex} {Min}-{Max} {Games} {Using} {Iterative} {First} {Order} {Methods}},
+	abstract = {Recent applications that arise in machine learning have surged signiﬁcant interest in solving min-max saddle point games. This problem has been extensively studied in the convex-concave regime for which a global equilibrium solution can be computed efﬁciently. In this paper, we study the problem in the non-convex regime and show that an ε–ﬁrst order stationary point of the game can be computed when one of the player’s objective can be optimized to global optimality efﬁciently. In particular, we ﬁrst consider the case where the objective of one of the players satisﬁes the Polyak-Łojasiewicz (PL) condition. For such a game, we show that a simple multi-step gradient descent-ascent algorithm ﬁnds an ε–ﬁrst order stationary point of the problem in O(ε−2) iterations. Then we show that our framework can also be applied to the case where the objective of the “max-player" is concave. In this case, we propose a multi-step gradient descent-ascent algorithm that ﬁnds an ε–ﬁrst order stationary point of the game in O(ε−3.5) iterations, which is the best known rate in the literature. We applied our algorithm to a fair classiﬁcation problem of Fashion-MNIST dataset and observed that the proposed algorithm results in smoother training and better generalization.},
+	language = {en},
+	author = {Nouiehed, Maher and Sanjabi, Maziar and Huang, Tianjian and Lee, Jason D and Razaviyayn, Meisam},
+	pages = {9},
+	file = {Nouiehed et al_Solving a Class of Non-Convex Min-Max Games Using Iterative First Order Methods.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Nouiehed et al_Solving a Class of Non-Convex Min-Max Games Using Iterative First Order Methods.pdf:application/pdf},
+}
+
+@article{robey_model-based_2020,
+	title = {Model-{Based} {Robust} {Deep} {Learning}: {Generalizing} to {Natural}, {Out}-of-{Distribution} {Data}},
+	shorttitle = {Model-{Based} {Robust} {Deep} {Learning}},
+	url = {http://arxiv.org/abs/2005.10247},
+	abstract = {While deep learning has resulted in major breakthroughs in many application domains, the frameworks commonly used in deep learning remain fragile to artificially-crafted and imperceptible changes in the data. In response to this fragility, adversarial training has emerged as a principled approach for enhancing the robustness of deep learning with respect to norm-bounded perturbations. However, there are other sources of fragility for deep learning that are arguably more common and less thoroughly studied. Indeed, natural variation such as lighting or weather conditions can significantly degrade the accuracy of trained neural networks, proving that such natural variation presents a significant challenge for deep learning. In this paper, we propose a paradigm shift from perturbation-based adversarial robustness toward model-based robust deep learning. Our objective is to provide general training algorithms that can be used to train deep neural networks to be robust against natural variation in data. Critical to our paradigm is first obtaining a model of natural variation which can be used to vary data over a range of natural conditions. Such models may be either known a priori or else learned from data. In the latter case, we show that deep generative models can be used to learn models of natural variation that are consistent with realistic conditions. We then exploit such models in three novel model-based robust training algorithms in order to enhance the robustness of deep learning with respect to the given model. Our extensive experiments show that across a variety of naturally-occurring conditions and across various datasets, deep neural networks trained with our model-based algorithms significantly outperform both standard deep learning algorithms as well as norm-bounded robust deep learning algorithms.},
+	urldate = {2020-11-03},
+	journal = {arXiv:2005.10247 [cs, stat]},
+	author = {Robey, Alexander and Hassani, Hamed and Pappas, George J.},
+	month = nov,
+	year = {2020},
+	note = {arXiv: 2005.10247},
+	file = {Robey et al_2020_Model-Based Robust Deep Learning.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Robey et al_2020_Model-Based Robust Deep Learning.pdf:application/pdf;arXiv.org Snapshot:/home/chinchilla/Zotero/storage/FDENIDMK/2005.html:text/html},
+}
+
+
+@article{wang_solving_2019,
+	title = {On {Solving} {Minimax} {Optimization} {Locally}: {A} {Follow}-the-{Ridge} {Approach}},
+	shorttitle = {On {Solving} {Minimax} {Optimization} {Locally}},
+	url = {http://arxiv.org/abs/1910.07512},
+	abstract = {Many tasks in modern machine learning can be formulated as finding equilibria in {\textbackslash}emph\{sequential\} games. In particular, two-player zero-sum sequential games, also known as minimax optimization, have received growing interest. It is tempting to apply gradient descent to solve minimax optimization given its popularity and success in supervised learning. However, it has been noted that naive application of gradient descent fails to find some local minimax and can converge to non-local-minimax points. In this paper, we propose {\textbackslash}emph\{Follow-the-Ridge\} (FR), a novel algorithm that provably converges to and only converges to local minimax. We show theoretically that the algorithm addresses the notorious rotational behaviour of gradient dynamics, and is compatible with preconditioning and {\textbackslash}emph\{positive\} momentum. Empirically, FR solves toy minimax problems and improves the convergence of GAN training compared to the recent minimax optimization algorithms.},
+	urldate = {2020-09-21},
+	journal = {arXiv:1910.07512 [cs, math, stat]},
+	author = {Wang, Yuanhao and Zhang, Guodong and Ba, Jimmy},
+	month = nov,
+	year = {2019},
+	note = {arXiv: 1910.07512},
+	file = {Wang et al_2019_On Solving Minimax Optimization Locally.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Wang et al_2019_On Solving Minimax Optimization Locally.pdf:application/pdf},
+}
+
+@article{daskalakis_limit_nodate,
+	title = {The {Limit} {Points} of ({Optimistic}) {Gradient} {Descent} in {Min}-{Max} {Optimization}},
+	abstract = {Motivated by applications in Optimization, Game Theory, and the training of Generative Adversarial Networks, the convergence properties of ﬁrst order methods in min-max problems have received extensive study. It has been recognized that they may cycle, and there is no good understanding of their limit points when they do not. When they converge, do they converge to local min-max solutions? We characterize the limit points of two basic ﬁrst order methods, namely Gradient Descent/Ascent (GDA) and Optimistic Gradient Descent Ascent (OGDA). We show that both dynamics avoid unstable critical points for almost all initializations. Moreover, for small step sizes and under mild assumptions, the set of OGDA-stable critical points is a superset of GDA-stable critical points, which is a superset of local min-max solutions (strict in some cases). The connecting thread is that the behavior of these dynamics can be studied from a dynamical systems perspective.},
+	language = {en},
+	author = {Daskalakis, Constantinos and Panageas, Ioannis},
+	keywords = {Important},
+	pages = {11},
+	file = {Daskalakis_Panageas_The Limit Points of (Optimistic) Gradient Descent in Min-Max Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Daskalakis_Panageas_The Limit Points of (Optimistic) Gradient Descent in Min-Max Optimization2.pdf:application/pdf},
+}
+
+@article{nouiehed_solving_nodate,
+	title = {Solving a {Class} of {Non}-{Convex} {Min}-{Max} {Games} {Using} {Iterative} {First} {Order} {Methods}},
+	abstract = {Recent applications that arise in machine learning have surged signiﬁcant interest in solving min-max saddle point games. This problem has been extensively studied in the convex-concave regime for which a global equilibrium solution can be computed efﬁciently. In this paper, we study the problem in the non-convex regime and show that an ε–ﬁrst order stationary point of the game can be computed when one of the player’s objective can be optimized to global optimality efﬁciently. In particular, we ﬁrst consider the case where the objective of one of the players satisﬁes the Polyak-Łojasiewicz (PL) condition. For such a game, we show that a simple multi-step gradient descent-ascent algorithm ﬁnds an ε–ﬁrst order stationary point of the problem in O(ε−2) iterations. Then we show that our framework can also be applied to the case where the objective of the “max-player" is concave. In this case, we propose a multi-step gradient descent-ascent algorithm that ﬁnds an ε–ﬁrst order stationary point of the game in O(ε−3.5) iterations, which is the best known rate in the literature. We applied our algorithm to a fair classiﬁcation problem of Fashion-MNIST dataset and observed that the proposed algorithm results in smoother training and better generalization.},
+	language = {en},
+	author = {Nouiehed, Maher and Sanjabi, Maziar and Huang, Tianjian and Lee, Jason D and Razaviyayn, Meisam},
+	pages = {9},
+	file = {Nouiehed et al_Solving a Class of Non-Convex Min-Max Games Using Iterative First Order Methods.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Nouiehed et al_Solving a Class of Non-Convex Min-Max Games Using Iterative First Order Methods.pdf:application/pdf},
+}
+
+@article{adolphs_local_2019,
+	title = {Local {Saddle} {Point} {Optimization}: {A} {Curvature} {Exploitation} {Approach}},
+	shorttitle = {Local {Saddle} {Point} {Optimization}},
+	url = {http://arxiv.org/abs/1805.05751},
+	abstract = {Gradient-based optimization methods are the most popular choice for ﬁnding local optima for classical minimization and saddle point problems. Here, we highlight a systemic issue of gradient dynamics that arise for saddle point problems, namely the presence of undesired stable stationary points that are no local optima. We propose a novel optimization approach that exploits curvature information in order to escape from these undesired stationary points. We prove that diﬀerent optimization methods, including gradient method and Adagrad, equipped with curvature exploitation can escape non-optimal stationary points. We also provide empirical results on common saddle point problems which conﬁrm the advantage of using curvature exploitation.},
+	language = {en},
+	urldate = {2020-11-25},
+	journal = {arXiv:1805.05751 [cs, math, stat]},
+	author = {Adolphs, Leonard and Daneshmand, Hadi and Lucchi, Aurelien and Hofmann, Thomas},
+	month = feb,
+	year = {2019},
+	note = {arXiv: 1805.05751},
+	file = {Adolphs et al_2019_Local Saddle Point Optimization.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Adolphs et al_2019_Local Saddle Point Optimization.pdf:application/pdf},
+}
+
+@article{mazumdar_finding_2019,
+	title = {On {Finding} {Local} {Nash} {Equilibria} (and {Only} {Local} {Nash} {Equilibria}) in {Zero}-{Sum} {Games}},
+	url = {http://arxiv.org/abs/1901.00838},
+	abstract = {We propose local symplectic surgery, a two-timescale procedure for finding local Nash equilibria in two-player zero-sum games. We first show that previous gradient-based algorithms cannot guarantee convergence to local Nash equilibria due to the existence of non-Nash stationary points. By taking advantage of the differential structure of the game, we construct an algorithm for which the local Nash equilibria are the only attracting fixed points. We also show that the algorithm exhibits no oscillatory behaviors in neighborhoods of equilibria and show that it has the same per-iteration complexity as other recently proposed algorithms. We conclude by validating the algorithm on two numerical examples: a toy example with multiple Nash equilibria and a non-Nash equilibrium, and the training of a small generative adversarial network (GAN).},
+	urldate = {2020-11-25},
+	journal = {arXiv:1901.00838 [cs, math, stat]},
+	author = {Mazumdar, Eric V. and Jordan, Michael I. and Sastry, S. Shankar},
+	month = jan,
+	year = {2019},
+	note = {arXiv: 1901.00838},
+	file = {Mazumdar et al_2019_On Finding Local Nash Equilibria (and Only Local Nash Equilibria) in Zero-Sum.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Mazumdar et al_2019_On Finding Local Nash Equilibria (and Only Local Nash Equilibria) in Zero-Sum.pdf:application/pdf;arXiv.org Snapshot:/home/chinchilla/Zotero/storage/RG9GQ9J5/1901.html:text/html},
+}
+
+@article{heusel_gans_nodate,
+	title = {{GANs} {Trained} by a {Two} {Time}-{Scale} {Update} {Rule} {Converge} to a {Local} {Nash} {Equilibrium}},
+	abstract = {Generative Adversarial Networks (GANs) excel at creating realistic images with complex models for which maximum likelihood is infeasible. However, the convergence of GAN training has still not been proved. We propose a two time-scale update rule (TTUR) for training GANs with stochastic gradient descent on arbitrary GAN loss functions. TTUR has an individual learning rate for both the discriminator and the generator. Using the theory of stochastic approximation, we prove that the TTUR converges under mild assumptions to a stationary local Nash equilibrium. The convergence carries over to the popular Adam optimization, for which we prove that it follows the dynamics of a heavy ball with friction and thus prefers ﬂat minima in the objective landscape. For the evaluation of the performance of GANs at image generation, we introduce the ‘Fréchet Inception Distance” (FID) which captures the similarity of generated images to real ones better than the Inception Score. In experiments, TTUR improves learning for DCGANs and Improved Wasserstein GANs (WGAN-GP) outperforming conventional GAN training on CelebA, CIFAR-10, SVHN, LSUN Bedrooms, and the One Billion Word Benchmark.},
+	language = {en},
+	author = {Heusel, Martin and Ramsauer, Hubert and Unterthiner, Thomas and Nessler, Bernhard and Hochreiter, Sepp},
+	pages = {12},
+	file = {Heusel et al_GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Heusel et al_GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash.pdf:application/pdf},
+}
+
+@article{balduzzi_mechanics_2018,
+	title = {The {Mechanics} of n-{Player} {Differentiable} {Games}},
+	url = {http://arxiv.org/abs/1802.05642},
+	abstract = {The cornerstone underpinning deep learning is the guarantee that gradient descent on an objective converges to local minima. Unfortunately, this guarantee fails in settings, such as generative adversarial nets, where there are multiple interacting losses. The behavior of gradient-based methods in games is not well understood – and is becoming increasingly important as adversarial and multiobjective architectures proliferate. In this paper, we develop new techniques to understand and control the dynamics in general games. The key result is to decompose the second-order dynamics into two components. The ﬁrst is related to potential games, which reduce to gradient descent on an implicit function; the second relates to Hamiltonian games, a new class of games that obey a conservation law, akin to conservation laws in classical mechanical systems. The decomposition motivates Symplectic Gradient Adjustment (SGA), a new algorithm for ﬁnding stable ﬁxed points in general games. Basic experiments show SGA is competitive with recently proposed algorithms for ﬁnding stable ﬁxed points in GANs – whilst at the same time being applicable to – and having guarantees in – much more general games.},
+	language = {en},
+	urldate = {2020-11-25},
+	journal = {arXiv:1802.05642 [cs]},
+	author = {Balduzzi, David and Racaniere, Sebastien and Martens, James and Foerster, Jakob and Tuyls, Karl and Graepel, Thore},
+	month = jun,
+	year = {2018},
+	note = {arXiv: 1802.05642},
+	file = {Balduzzi et al_2018_The Mechanics of n-Player Differentiable Games.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Balduzzi et al_2018_The Mechanics of n-Player Differentiable Games.pdf:application/pdf},
+}
+
+@article{mertikopoulos_optimistic_2019,
+	title = {Optimistic {Mirror} {Descent} in {Saddle}-{Point} {Problems}: {Going} the {Extra} ({Gradient}) {Mile}},
+	abstract = {Owing to their connection with generative adversarial networks (GANs), saddlepoint problems have recently attracted considerable interest in machine learning and beyond. By necessity, most theoretical guarantees revolve around convexconcave (or even linear) problems; however, making theoretical inroads towards eﬃcient GAN training depends crucially on moving beyond this classic framework. To make piecemeal progress along these lines, we analyze the behavior of mirror descent (MD) in a class of non-monotone problems whose solutions coincide with those of a naturally associated variational inequality – a property which we call coherence. We ﬁrst show that ordinary, “vanilla” MD converges under a strict version of this condition, but not otherwise; in particular, it may fail to converge even in bilinear models with a unique solution. We then show that this deﬁciency is mitigated by optimism: by taking an “extra-gradient” step, optimistic mirror descent (OMD) converges in all coherent problems. Our analysis generalizes and extends the results of Daskalakis et al. [2018] for optimistic gradient descent (OGD) in bilinear problems, and makes concrete headway for provable convergence beyond convex-concave games. We also provide stochastic analogues of these results, and we validate our analysis by numerical experiments in a wide array of GAN models (including Gaussian mixture models, and the CelebA and CIFAR-10 datasets).},
+	language = {en},
+	author = {Mertikopoulos, Panayotis and Lecouat, Bruno and Zenati, Houssam and Foo, Chuan-Sheng and Chandrasekhar, Vijay and Piliouras, Georgios},
+	year = {2019},
+	pages = {24},
+	file = {Mertikopoulos et al_2019_Optimistic Mirror Descent in Saddle-Point Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Mertikopoulos et al_2019_Optimistic Mirror Descent in Saddle-Point Problems.pdf:application/pdf},
+}
+
+@article{liu_first-order_2020,
+	title = {First-order {Convergence} {Theory} for {Weakly}-{Convex}-{Weakly}-{Concave} {Min}-max {Problems}},
+	url = {http://arxiv.org/abs/1810.10207},
+	abstract = {In this paper, we consider first-order convergence theory and algorithms for solving a class of non-convex non-concave min-max saddle-point problems, whose objective function is weakly convex in the variables of minimization and weakly concave in the variables of maximization. It has many important applications in machine learning including training Generative Adversarial Nets (GANs). We propose an algorithmic framework motivated by the inexact proximal point method, where the weakly monotone variational inequality (VI) corresponding to the original min-max problem is solved through approximately solving a sequence of strongly monotone VIs constructed by adding a strongly monotone mapping to the original gradient mapping. We prove first-order convergence to a nearly stationary solution of the original min-max problem of the generic algorithmic framework and establish different rates by employing different algorithms for solving each strongly monotone VI. Experiments verify the convergence theory and also demonstrate the effectiveness of the proposed methods on training GANs.},
+	urldate = {2020-11-25},
+	journal = {arXiv:1810.10207 [math, stat]},
+	author = {Liu, Mingrui and Rafique, Hassan and Lin, Qihang and Yang, Tianbao},
+	month = may,
+	year = {2020},
+	note = {arXiv: 1810.10207
+	version: 3},
+	file = {Liu et al_2020_First-order Convergence Theory for Weakly-Convex-Weakly-Concave Min-max Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Liu et al_2020_First-order Convergence Theory for Weakly-Convex-Weakly-Concave Min-max Problems.pdf:application/pdf;arXiv.org Snapshot:/home/chinchilla/Zotero/storage/D2I3LXIS/1810.html:text/html},
+}
+
+@article{lu_hybrid_2020,
+	title = {Hybrid {Block} {Successive} {Approximation} for {One}-{Sided} {Non}-{Convex} {Min}-{Max} {Problems}: {Algorithms} and {Applications}},
+	volume = {68},
+	issn = {1941-0476},
+	shorttitle = {Hybrid {Block} {Successive} {Approximation} for {One}-{Sided} {Non}-{Convex} {Min}-{Max} {Problems}},
+	doi = {10.1109/TSP.2020.2986363},
+	abstract = {The min-max problem, also known as the saddle point problem, is a class of optimization problems which minimizes and maximizes two subsets of variables simultaneously. This class of problems can be used to formulate a wide range of signal processing and communication (SPCOM) problems. Despite its popularity, most existing theory for this class has been mainly developed for problems with certain special convex-concave structure. Therefore, it cannot be used to guide the algorithm design for many interesting problems in SPCOM, where various kinds of non-convexity arise. In this work, we consider a block-wise one-sided non-convex min-max problem, in which the minimization problem consists of multiple blocks and is non-convex, while the maximization problem is (strongly) concave. We propose a class of simple algorithms named Hybrid Block Successive Approximation (HiBSA), which alternatingly performs gradient descent-type steps for the minimization blocks and gradient ascent-type steps for the maximization problem. A key element in the proposed algorithm is the use of certain regularization and penalty sequences, which stabilize the algorithm and ensure convergence. We show that HiBSA converges to some properly defined first-order stationary solutions with quantifiable global rates. To validate the efficiency of the proposed algorithms, we conduct numerical tests on a number of problems, including the robust learning problem, the non-convex min-utility maximization problems, and certain wireless jamming problem arising in interfering channels.},
+	journal = {IEEE Transactions on Signal Processing},
+	author = {Lu, S. and Tsaknakis, I. and Hong, M. and Chen, Y.},
+	year = {2020},
+	note = {Conference Name: IEEE Transactions on Signal Processing},
+	pages = {3676--3691},
+	file = {Lu et al_2020_Hybrid Block Successive Approximation for One-Sided Non-Convex Min-Max Problems.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Lu et al_2020_Hybrid Block Successive Approximation for One-Sided Non-Convex Min-Max Problems.pdf:application/pdf},
+}
+
+@article{goodfellow_generative_2014,
+	title={Generative adversarial nets},
+	author={Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and Xu, Bing and Warde-Farley, David and Ozair, Sherjil and Courville, Aaron and Bengio, Yoshua},
+	journal={Advances in neural information processing systems},
+	volume={27},
+	pages={2672--2680},
+	year={2014}
+}
+
+
+@incollection{garulli_robust_1999,
+	address = {London},
+	title = {Robust model predictive control: {A} survey},
+	volume = {245},
+	isbn = {978-1-85233-179-5},
+	shorttitle = {Robust model predictive control},
+	url = {http://www.springerlink.com/index/10.1007/BFb0109870},
+	language = {en},
+	urldate = {2019-03-19},
+	booktitle = {Robustness in identification and control},
+	publisher = {Springer London},
+	author = {Bemporad, Alberto and Morari, Manfred},
+	editor = {Garulli, A. and Tesi, A.},
+	year = {1999},
+	doi = {10.1007/BFb0109870},
+	pages = {207--226},
+	file = {Bemporad_Morari_1999_Robust model predictive control.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Bemporad_Morari_1999_Robust model predictive control.pdf:application/pdf},
+}
+
+@incollection{magni2007robustness,
+	title={Robustness and robust design of MPC for nonlinear discrete-time systems},
+	author={Magni, Lalo and Scattolini, Riccardo},
+	booktitle={Assessment and future directions of nonlinear model predictive control},
+	pages={239--254},
+	year={2007},
+	publisher={Springer}
+}
+
+
+@article{copp_simultaneous_2017,
+	title = {Simultaneous nonlinear model predictive control and state estimation},
+	volume = {77},
+	issn = {0005-1098},
+	url = {http://www.sciencedirect.com/science/article/pii/S0005109816304848},
+	doi = {10.1016/j.automatica.2016.11.041},
+	abstract = {An output-feedback approach to model predictive control that combines state estimation and control into a single min–max optimization is introduced for discrete-time nonlinear systems. Specifically, a criterion that involves finite forward and backward horizons is minimized with respect to control input variables and is maximized with respect to the unknown initial state as well as disturbance and measurement noise variables. Under appropriate assumptions that encode controllability and observability, we show that the state of the closed-loop remains bounded and that a bound on tracking error can be found for trajectory-tracking problems. We also introduce a primal–dual interior-point method that can be used to efficiently solve the min–max optimization problem and show in simulation examples that the method succeeds even for severely nonlinear and non-convex problems.},
+	language = {en},
+	urldate = {2020-11-25},
+	journal = {Automatica},
+	author = {Copp, David A. and Hespanha, João P.},
+	month = mar,
+	year = {2017},
+	pages = {143--154},
+	file = {Copp_Hespanha_2017_Simultaneous nonlinear model predictive control and state estimation.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Copp_Hespanha_2017_Simultaneous nonlinear model predictive control and state estimation.pdf:application/pdf;ScienceDirect Snapshot:/home/chinchilla/Zotero/storage/8D938SPU/S0005109816304848.html:text/html},
+}
+
+@incollection{huber1992robust,
+	title={Robust estimation of a location parameter},
+	author={Huber, Peter J},
+	booktitle={Breakthroughs in statistics},
+	pages={492--518},
+	year={1992},
+	publisher={Springer}
+}
+
+@book{staudte2011robust,
+	title={Robust estimation and testing},
+	author={Staudte, Robert G and Sheather, Simon J},
+	volume={918},
+	year={2011},
+	publisher={John Wiley \& Sons}
+}
+
+@inproceedings{chinchilla2019optimization,
+	title={Optimization-based Estimation of Expected Values with Application to Stochastic Programming},
+	author={Chinchilla, Raphael and Hespanha, Jo{\~a}o P},
+	booktitle={2019 IEEE 58th Conference on Decision and Control (CDC)},
+	pages={6356--6361},
+	year={2019},
+	organization={IEEE}
+}
+
+@article{monderer1996fictitious,
+	title={Fictitious play property for games with identical interests},
+	author={Monderer, Dov and Shapley, Lloyd S},
+	journal={Journal of economic theory},
+	volume={68},
+	number={1},
+	pages={258--265},
+	year={1996},
+	publisher={Elsevier}
+}
+
+@article{sion1958general,
+	title={On general minimax theorems.},
+	author={Sion, Maurice and others},
+	journal={Pacific Journal of mathematics},
+	volume={8},
+	number={1},
+	pages={171--176},
+	year={1958},
+	publisher={Pacific Journal of Mathematics}
+}
+
+@article{fan1953minimax,
+	title={Minimax theorems},
+	author={Fan, Ky},
+	journal={Proceedings of the National Academy of Sciences of the United States of America},
+	volume={39},
+	number={1},
+	pages={42},
+	year={1953},
+	publisher={National Academy of Sciences}
+}
+
+@article{bopardikar_randomized_2013,
+	title = {Randomized sampling for large zero-sum games},
+	volume = {49},
+	issn = {0005-1098},
+	url = {http://www.sciencedirect.com/science/article/pii/S0005109813000630},
+	doi = {10.1016/j.automatica.2013.01.062},
+	abstract = {This paper addresses the solution of large zero-sum matrix games using randomized methods. We formalize a procedure, termed as the sampled security policy (SSP) algorithm, by which a player can compute policies that, with a high confidence, are security policies against an adversary using randomized methods to explore the possible outcomes of the game. The SSP algorithm essentially consists of solving a stochastically sampled subgame that is much smaller than the original game. We also propose a randomized algorithm, termed as the sampled security value (SSV) algorithm, which computes a high-confidence security-level (i.e., worst-case outcome) for a given policy, which may or may not have been obtained using the SSP algorithm. For both the SSP and the SSV algorithms we provide results to determine how many samples are needed to guarantee a desired level of confidence. We start by providing results when the two players sample policies with the same distribution and subsequently extend these results to the case of mismatched distributions. We demonstrate the usefulness of these results in a hide-and-seek game that exhibits exponential complexity.},
+	number = {5},
+	urldate = {2019-07-08},
+	journal = {Automatica},
+	author = {Bopardikar, Shaunak D. and Borri, Alessandro and Hespanha, João P. and Prandini, Maria and Di Benedetto, Maria D.},
+	month = may,
+	year = {2013},
+	pages = {1184--1194},
+	file = {Bopardikar et al_2013_Randomized sampling for large zero-sum games.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Bopardikar et al_2013_Randomized sampling for large zero-sum games.pdf:application/pdf},
+}
+
+@article{calafiore2006scenario,
+	title={The scenario approach to robust control design},
+	author={Calafiore, Giuseppe C and Campi, Marco C},
+	journal={IEEE Transactions on automatic control},
+	volume={51},
+	number={5},
+	pages={742--753},
+	year={2006},
+	publisher={IEEE}
+}
+
+@article{mutapcic2009cutting,
+	title={Cutting-set methods for robust convex optimization with pessimizing oracles},
+	author={Mutapcic, Almir and Boyd, Stephen},
+	journal={Optimization Methods \& Software},
+	volume={24},
+	number={3},
+	pages={381--406},
+	year={2009},
+	publisher={Taylor \& Francis}
+}
+
+@article{bertsimas2016reformulation,
+	title={Reformulation versus cutting-planes for robust optimization},
+	author={Bertsimas, Dimitris and Dunning, Iain and Lubin, Miles},
+	journal={Computational Management Science},
+	volume={13},
+	number={2},
+	pages={195--217},
+	year={2016},
+	publisher={Springer}
+}
+
+
+@article{shapiro_differentiability_2016,
+	title = {Differentiability {Properties} of {Metric} {Projections} onto {Convex} {Sets}},
+	volume = {169},
+	issn = {0022-3239, 1573-2878},
+	url = {http://link.springer.com/10.1007/s10957-016-0871-8},
+	doi = {10.1007/s10957-016-0871-8},
+	abstract = {It is known that directional differentiability of metric projection onto a closed convex set in a ﬁnite-dimensional space is not guaranteed. In this paper, we discuss sufﬁcient conditions ensuring directional differentiability of such metric projections. The approach is based on a general theory of sensitivity analysis of parameterized optimization problems.},
+	language = {en},
+	number = {3},
+	urldate = {2021-01-19},
+	journal = {Journal of Optimization Theory and Applications},
+	author = {Shapiro, Alexander},
+	month = jun,
+	year = {2016},
+	pages = {953--964},
+	file = {Shapiro_2016_Differentiability Properties of Metric Projections onto Convex Sets.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Shapiro_2016_Differentiability Properties of Metric Projections onto Convex Sets.pdf:application/pdf},
+}
+
+
+@article{laue_equivalence_2019,
+	title = {On the {Equivalence} of {Forward} {Mode} {Automatic} {Differentiation} and {Symbolic} {Differentiation}},
+	url = {http://arxiv.org/abs/1904.02990},
+	abstract = {We show that forward mode automatic differentiation and symbolic differentiation are equivalent in the sense that they both perform the same operations when computing derivatives. This is in stark contrast to the common claim that they are substantially different. The difference is often illustrated by claiming that symbolic differentiation suffers from "expression swell" whereas automatic differentiation does not. Here, we show that this statement is not true. "Expression swell" refers to the phenomenon of a much larger representation of the derivative as opposed to the representation of the original function.},
+	urldate = {2020-07-05},
+	journal = {arXiv:1904.02990 [cs]},
+	author = {Laue, Soeren},
+	month = may,
+	year = {2019},
+	note = {arXiv: 1904.02990},
+	file = {Laue_2019_On the Equivalence of Forward Mode Automatic Differentiation and Symbolic.pdf:/home/chinchilla/Nextcloud/Literature/Academic Literature/Laue_2019_On the Equivalence of Forward Mode Automatic Differentiation and Symbolic.pdf:application/pdf},
+}
+
+@inproceedings{foerster2018learning,
+	title={Learning with Opponent-Learning Awareness},
+	author={Foerster, Jakob and Chen, Richard Y and Al-Shedivat, Maruan and Whiteson, Shimon and Abbeel, Pieter and Mordatch, Igor},
+	booktitle={Proceedings of the 17th International Conference on Autonomous Agents and MultiAgent Systems},
+	pages={122--130},
+	year={2018}
+}
+
+@article{letcher2018stable,
+	title={Stable opponent shaping in differentiable games},
+	author={Letcher, Alistair and Foerster, Jakob and Balduzzi, David and Rockt{\"a}schel, Tim and Whiteson, Shimon},
+	journal={arXiv preprint arXiv:1811.08469},
+	year={2018}
+}
+
